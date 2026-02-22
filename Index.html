@@ -1,108 +1,59 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" class="h-full">
- <head>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SVG Celebration Card</title>
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <script src="/_sdk/element_sdk.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&amp;display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <title>Celebration Card</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html, body {
-      height: 100%;
-      width: 100%;
-    }
-
-    #app {
-      height: 100%;
-      width: 100%;
-    }
-
     body {
+      margin: 0;
       font-family: 'Poppins', sans-serif;
       overflow: hidden;
     }
 
     .playfair { font-family: 'Playfair Display', serif; }
-    .poppins { font-family: 'Poppins', sans-serif; }
 
-    /* Keyframe Animations */
+    /* Animations */
     @keyframes confetti-fall {
-      0% {
-        transform: translateY(-100vh) rotateZ(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(100vh) rotateZ(720deg);
-        opacity: 0;
-      }
+      0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
     }
 
     @keyframes float-bounce {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-20px) rotate(5deg); }
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
     }
 
-    @keyframes pulse-scale {
-      0%, 100% { transform: scale(1); }
+    @keyframes pulse {
+      0%,100% { transform: scale(1); }
       50% { transform: scale(1.08); }
     }
 
-    @keyframes rainbow-gradient {
+    @keyframes slide-up {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes rainbow {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
-    }
-
-    @keyframes slide-up {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes heart-beat {
-      0%, 100% { transform: scale(1); }
-      25% { transform: scale(1.15); }
-      50% { transform: scale(1); }
-      75% { transform: scale(1.15); }
-    }
-
-    @keyframes shimmer {
-      0%, 100% { opacity: 0.6; }
-      50% { opacity: 1; }
-    }
-
-    @keyframes spin-svg {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    /* Element Classes */
-    .confetti-piece {
-      position: fixed;
-      pointer-events: none;
-      animation: confetti-fall linear forwards;
     }
 
     .page {
       position: absolute;
       width: 100%;
       height: 100%;
+      transition: opacity 0.6s ease;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .page.active {
@@ -111,214 +62,147 @@
     }
 
     .welcome-bg {
-      background: linear-gradient(135deg, #a8d8f0 0%, #f7b9e3 50%, #fcd5ce 100%);
+      background: linear-gradient(135deg, #a8d8f0, #f7b9e3, #fcd5ce);
     }
 
     .celebration-bg {
-      background: linear-gradient(135deg, #FF6B9D 0%, #FFB347 20%, #87CEEB 40%, #DDA0DD 60%, #98FB98 80%, #FF6B9D 100%);
+      background: linear-gradient(135deg, #FF6B9D, #FFB347, #87CEEB, #DDA0DD, #98FB98);
       background-size: 400% 400%;
-      animation: rainbow-gradient 8s ease infinite;
+      animation: rainbow 8s ease infinite;
     }
 
     .floating-emoji {
-      animation: float-bounce 3s ease-in-out infinite;
-      display: inline-block;
+      animation: float-bounce 3s infinite;
     }
 
     .btn-celebrate {
-      animation: pulse-scale 2s ease-in-out infinite;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-
-    .btn-celebrate:hover {
-      transform: scale(1.1);
-    }
-
-    .btn-celebrate:active {
-      transform: scale(0.95);
+      animation: pulse 2s infinite;
     }
 
     .fade-in {
-      animation: slide-up 0.8s ease-out forwards;
-      opacity: 0;
+      animation: slide-up 0.8s forwards;
     }
 
-    .fade-in-delay-1 { animation-delay: 0.2s; }
-    .fade-in-delay-2 { animation-delay: 0.4s; }
-    .fade-in-delay-3 { animation-delay: 0.6s; }
-    .fade-in-delay-4 { animation-delay: 0.8s; }
-
-    .heart-pulse {
-      animation: heart-beat 1.5s ease-in-out infinite;
-    }
-
-    .svg-spin {
-      animation: spin-svg 4s linear infinite;
-    }
-
-    .message-container {
-      max-height: 65vh;
-      overflow-y: auto;
-      scroll-behavior: smooth;
-    }
-
-    .message-container::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .message-container::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-    }
-
-    .message-container::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.5);
-      border-radius: 10px;
-    }
-
-    .svg-decoration {
-      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+    .confetti-piece {
+      position: fixed;
+      animation: confetti-fall linear forwards;
+      pointer-events: none;
     }
   </style>
-  <style>body { box-sizing: border-box; }</style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
- </head>
- <body>
-  <div id="app" class="w-full h-full relative overflow-hidden"><!-- Page 1: Welcome Card -->
-   <div id="page1" class="page active welcome-bg w-full h-full flex flex-col items-center justify-center p-6 overflow-hidden">
-    <div class="max-w-md w-full"><!-- Decorative SVG -->
-     <svg class="w-28 h-28 mx-auto mb-8 fade-in svg-decoration" viewbox="0 0 120 120" fill="none"><defs>
-       <lineargradient id="starGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" style="stop-color:#FF69B4;stop-opacity:1" />
-        <stop offset="100%" style="stop-color:#FFB347;stop-opacity:1" />
-       </lineargradient>
-      </defs> <circle cx="60" cy="60" r="55" stroke="url(#starGrad)" stroke-width="2" opacity="0.3" /> <path d="M60 15 L72 45 L105 50 L80 70 L88 102 L60 80 L32 102 L40 70 L15 50 L48 45 Z" fill="url(#starGrad)" /> <circle cx="60" cy="60" r="50" fill="none" stroke="url(#starGrad)" stroke-width="1" opacity="0.2" />
-     </svg><!-- Title -->
-     <h1 id="title" class="playfair text-6xl font-bold text-center text-white mb-4 fade-in fade-in-delay-1" style="text-shadow: 0 4px 8px rgba(0,0,0,0.15);">Something Special Awaits! 🎉</h1><!-- Recipient Name Display -->
-     <p id="recipient-display" class="poppins text-2xl font-semibold text-center text-white mb-8 fade-in fade-in-delay-2" style="text-shadow: 0 2px 4px rgba(0,0,0,0.1);">Oisweyee</p><!-- Card Preview -->
-     <div class="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl p-8 mb-8 fade-in fade-in-delay-3" style="box-shadow: 0 20px 40px rgba(0,0,0,0.1);">
-      <p class="text-gray-800 text-center font-semibold mb-3">✨ A Heartfelt Celebration ✨</p>
-      <p class="text-gray-600 text-center text-sm leading-relaxed">Tap the button below to reveal a personalized message filled with confetti, love, and celebration just for you!</p>
-     </div><!-- Celebrate Button --> <button id="celebrate-btn" class="btn-celebrate w-full bg-gradient-to-r from-pink-500 via-red-500 to-rose-500 hover:from-pink-600 hover:via-red-600 hover:to-rose-600 text-white font-bold py-4 px-8 rounded-full text-xl shadow-xl fade-in fade-in-delay-4 transition-all duration-300"> 🎈 Let's Celebrate! 🎈 </button> <!-- Floating Emojis -->
-     <div class="mt-12 flex justify-center gap-6"><span class="floating-emoji text-4xl">🎂</span> <span class="floating-emoji text-4xl" style="animation-delay: 0.5s;">🎁</span> <span class="floating-emoji text-4xl" style="animation-delay: 1s;">✨</span> <span class="floating-emoji text-4xl" style="animation-delay: 1.5s;">🌟</span>
-     </div>
-    </div>
-   </div><!-- Page 2: Celebration Message -->
-   <div id="page2" class="page celebration-bg w-full h-full flex flex-col items-center justify-center p-6 overflow-hidden">
-    <div class="w-full h-full flex flex-col items-center justify-center"><!-- Top Decorative SVG -->
-     <svg class="w-16 h-16 mb-4 fade-in" viewbox="0 0 100 100" fill="none"><defs>
-       <lineargradient id="celebrationGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
-        <stop offset="100%" style="stop-color:#FFB347;stop-opacity:1" />
-       </lineargradient>
-      </defs> <circle cx="50" cy="50" r="45" fill="none" stroke="url(#celebrationGrad)" stroke-width="2" opacity="0.8" /> <path d="M50 20 L58 35 L75 38 L63 48 L67 65 L50 55 L33 65 L37 48 L25 38 L42 35 Z" fill="url(#celebrationGrad)" opacity="0.9" />
-     </svg><!-- Celebration Title -->
-     <h1 id="celebration-title" class="playfair text-5xl md:text-6xl font-bold text-center text-white mb-2 fade-in" style="text-shadow: 0 4px 8px rgba(0,0,0,0.2);">Happy 18th Birthday!</h1><!-- Celebration Emojis -->
-     <p class="text-3xl text-white font-bold text-center mb-8 fade-in fade-in-delay-1">🎉 🥳 🎈 🎂</p><!-- Message Container -->
-     <div class="message-container w-full max-w-2xl mx-auto">
-      <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-3xl p-8 md:p-12" style="box-shadow: 0 25px 50px rgba(0,0,0,0.15);"><!-- Recipient Name as Subtitle -->
-       <p id="recipient-msg" class="text-center text-3xl font-bold bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent mb-2 fade-in fade-in-delay-1">Oisweyee</p><!-- Tagline -->
-       <p id="tagline-msg" class="text-center text-xl font-semibold text-pink-600 mb-6 fade-in fade-in-delay-2">My First And Last Love 💕 😘 🎈</p><!-- Main Message -->
-       <p id="message-msg" class="text-center text-gray-700 text-base md:text-lg leading-relaxed mb-6 fade-in fade-in-delay-3">They say 18 is the start of a new chapter, but to me, you've always been the best part of the story. 📖✨ I hope your day is as beautiful and unique as your soul. 🌸 Watching you chase your dreams is one of my favorite things, and I'll always be here cheering you on from the front row. May this year be the one where everything falls into place for you. Enjoy your big day to the fullest! 🥂💫❤️</p><!-- Heart Signature -->
-       <div class="text-center mt-8 fade-in fade-in-delay-4"><span class="text-5xl heart-pulse">💕</span>
-       </div>
-      </div>
-     </div><!-- Back Button --> <button id="back-btn" class="mt-8 bg-white bg-opacity-90 hover:bg-opacity-100 text-pink-600 font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 fade-in fade-in-delay-4"> ← Back to Welcome </button>
-    </div>
-   </div>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div id="page1" class="page active welcome-bg flex flex-col items-center justify-center text-center p-6">
+
+  <!-- SVG Decoration -->
+  <svg width="120" height="120" viewBox="0 0 120 120">
+    <defs>
+      <linearGradient id="starGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#FF69B4"/>
+        <stop offset="100%" stop-color="#FFB347"/>
+      </linearGradient>
+    </defs>
+
+    <circle cx="60" cy="60" r="55" stroke="url(#starGrad)" stroke-width="2" opacity="0.3"/>
+    <path d="M60 15 L72 45 L105 50 L80 70 L88 102 L60 80 L32 102 L40 70 L15 50 L48 45 Z"
+          fill="url(#starGrad)"/>
+  </svg>
+
+  <h1 class="playfair text-5xl font-bold text-white mt-6 fade-in">
+    Something Special Awaits! 🎉
+  </h1>
+
+  <p class="text-white text-xl mt-3 fade-in">
+    Oisweyee
+  </p>
+
+  <button id="celebrateBtn"
+    class="btn-celebrate mt-8 bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-8 rounded-full shadow-lg">
+    🎈 Let's Celebrate! 🎈
+  </button>
+
+  <div class="mt-10 flex gap-4 text-3xl">
+    <span class="floating-emoji">🎂</span>
+    <span class="floating-emoji">🎁</span>
+    <span class="floating-emoji">✨</span>
+    <span class="floating-emoji">🌟</span>
   </div>
-  <script>
-    // Configuration
-    const defaultConfig = {
-      recipient_name: 'Oisweyee',
-      celebration_type: 'Happy 18th Birthday!',
-      main_message: "They say 18 is the start of a new chapter, but to me, you've always been the best part of the story. 📖✨ I hope your day is as beautiful and unique as your soul. 🌸 Watching you chase your dreams is one of my favorite things, and I'll always be here cheering you on from the front row. May this year be the one where everything falls into place for you. Enjoy your big day to the fullest! 🥂💫❤️",
-      tagline: 'My First And Last Love 💕 😘 🎈'
-    };
 
-    let config = { ...defaultConfig };
+</div>
 
-    // Element SDK Initialization
-    window.elementSdk.init({
-      defaultConfig,
-      onConfigChange: async (newConfig) => {
-        config = { ...config, ...newConfig };
-        updateCardContent();
-      },
-      mapToCapabilities: () => ({
-        recolorables: [],
-        borderables: [],
-        fontEditable: undefined,
-        fontSizeable: undefined
-      }),
-      mapToEditPanelValues: (cfg) => new Map([
-        ['recipient_name', cfg.recipient_name || defaultConfig.recipient_name],
-        ['celebration_type', cfg.celebration_type || defaultConfig.celebration_type],
-        ['main_message', cfg.main_message || defaultConfig.main_message],
-        ['tagline', cfg.tagline || defaultConfig.tagline]
-      ])
-    });
 
-    function updateCardContent() {
-      document.getElementById('recipient-display').textContent = config.recipient_name;
-      document.getElementById('recipient-msg').textContent = config.recipient_name;
-      document.getElementById('celebration-title').textContent = config.celebration_type;
-      document.getElementById('message-msg').textContent = config.main_message;
-      document.getElementById('tagline-msg').textContent = config.tagline;
-    }
+<!-- PAGE 2 -->
+<div id="page2" class="page celebration-bg flex flex-col items-center justify-center text-center p-6">
 
-    // Page Navigation
-    const page1 = document.getElementById('page1');
-    const page2 = document.getElementById('page2');
-    const celebrateBtn = document.getElementById('celebrate-btn');
-    const backBtn = document.getElementById('back-btn');
+  <h1 class="playfair text-5xl font-bold text-white">
+    Happy 18th Birthday!
+  </h1>
 
-    celebrateBtn.addEventListener('click', () => {
-      page1.classList.remove('active');
-      page2.classList.add('active');
-      createConfetti();
-    });
+  <p class="text-white text-2xl mt-2">🎉 🥳 🎈 🎂</p>
 
-    backBtn.addEventListener('click', () => {
-      page2.classList.remove('active');
-      page1.classList.add('active');
-    });
+  <div class="bg-white bg-opacity-95 rounded-3xl p-8 mt-6 max-w-xl shadow-xl">
+    <h2 class="text-2xl font-bold text-pink-500">Oisweyee</h2>
 
-    // Confetti Generator Function
-    function createConfetti() {
-      const colors = ['#FF6B9D', '#FFB347', '#87CEEB', '#DDA0DD', '#98FB98', '#FFD700', '#FF1493', '#FF69B4'];
-      const confettiCount = 100;
+    <p class="mt-4 text-gray-700 leading-relaxed">
+      They say 18 is the start of a new chapter, but to me, you've always been the best part of the story.
+      I hope your day is as beautiful and unique as your soul.
+      May this year bring success, happiness, and endless smiles.
+    </p>
 
-      for (let i = 0; i < confettiCount; i++) {
-        setTimeout(() => {
-          const confetti = document.createElement('div');
-          confetti.className = 'confetti-piece';
-          
-          const size = Math.random() * 14 + 5;
-          const leftPos = Math.random() * 100;
-          const delay = Math.random() * 0.3;
-          const duration = Math.random() * 2.5 + 2;
+    <div class="text-4xl mt-6">💕</div>
+  </div>
 
-          confetti.style.left = leftPos + '%';
-          confetti.style.top = '-30px';
-          confetti.style.width = size + 'px';
-          confetti.style.height = size + 'px';
-          confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-          confetti.style.opacity = Math.random() * 0.8 + 0.4;
-          confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-          confetti.style.animationDuration = duration + 's';
-          confetti.style.animationDelay = delay + 's';
+  <button id="backBtn"
+    class="mt-8 bg-white text-pink-500 font-bold py-2 px-6 rounded-full shadow-lg">
+    ← Back
+  </button>
 
-          document.getElementById('app').appendChild(confetti);
+</div>
 
-          setTimeout(() => confetti.remove(), (duration + delay) * 1000);
-        }, i * 25);
-      }
-    }
 
-    // Initialize content
-    updateCardContent();
-  </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d1ae44c66f5f655',t:'MTc3MTcyNTY0Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>
+
+const page1 = document.getElementById("page1");
+const page2 = document.getElementById("page2");
+const celebrateBtn = document.getElementById("celebrateBtn");
+const backBtn = document.getElementById("backBtn");
+
+celebrateBtn.addEventListener("click", () => {
+  page1.classList.remove("active");
+  page2.classList.add("active");
+  createConfetti();
+});
+
+backBtn.addEventListener("click", () => {
+  page2.classList.remove("active");
+  page1.classList.add("active");
+});
+
+
+function createConfetti() {
+  const colors = ["#FF6B9D","#FFB347","#87CEEB","#DDA0DD","#98FB98","#FFD700"];
+  
+  for(let i=0;i<80;i++){
+    const confetti = document.createElement("div");
+    confetti.className = "confetti-piece";
+
+    const size = Math.random()*12+6;
+    confetti.style.width = size+"px";
+    confetti.style.height = size+"px";
+    confetti.style.left = Math.random()*100+"%";
+    confetti.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+    confetti.style.borderRadius = Math.random()>0.5?"50%":"0";
+    confetti.style.animationDuration = (Math.random()*2+2)+"s";
+
+    document.body.appendChild(confetti);
+
+    setTimeout(()=>confetti.remove(),4000);
+  }
+}
+
+</script>
+
+</body>
 </html>
