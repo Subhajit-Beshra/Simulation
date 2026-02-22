@@ -22,7 +22,7 @@ body{
   color:white;
 }
 
-/* Galaxy Glow */
+/* Galaxy */
 .galaxy{
   position:absolute;
   width:200%;
@@ -68,7 +68,7 @@ body{
   to{transform:translate(100vw,100vh) rotate(45deg);opacity:0;}
 }
 
-/* Center Content */
+/* Center */
 .center{
   position:absolute;
   top:50%;
@@ -94,7 +94,6 @@ body{
   to{text-shadow:0 0 40px #ff0080;}
 }
 
-/* Subtitle */
 .subtitle{
   font-size:5vw;
   margin-top:5px;
@@ -105,11 +104,38 @@ body{
   margin-top:20px;
   font-size:4vw;
   line-height:1.6;
-  min-height:150px;
+  min-height:160px;
   padding:10px;
+  opacity:0;
+  transition:opacity 1s ease;
 }
 
-/* Floating Birthday Emojis */
+/* Button */
+.openBtn{
+  margin-top:25px;
+  padding:12px 28px;
+  font-size:4vw;
+  border:none;
+  border-radius:30px;
+  background:linear-gradient(45deg,#ff4fa3,#ff7eb9);
+  color:white;
+  font-weight:600;
+  cursor:pointer;
+  box-shadow:0 0 20px #ff4fa3;
+  animation:pulse 2s infinite;
+  transition:0.3s;
+}
+
+.openBtn:hover{
+  transform:scale(1.1);
+}
+
+@keyframes pulse{
+  0%,100%{box-shadow:0 0 15px #ff4fa3;}
+  50%{box-shadow:0 0 30px #ff0080;}
+}
+
+/* Floating Emojis */
 .particle{
   position:absolute;
   font-size:20px;
@@ -119,22 +145,6 @@ body{
 @keyframes floatUp{
   from{transform:translateY(100vh);opacity:1;}
   to{transform:translateY(-10vh);opacity:0;}
-}
-
-/* Tap Text */
-.tap{
-  position:absolute;
-  bottom:20px;
-  width:100%;
-  text-align:center;
-  font-size:3.5vw;
-  opacity:0.7;
-  animation:pulse 2s infinite;
-}
-
-@keyframes pulse{
-  0%,100%{opacity:0.4;}
-  50%{opacity:1;}
 }
 
 </style>
@@ -147,14 +157,15 @@ body{
 <div class="center">
   <div class="name">Oisweyee</div>
   <div class="subtitle">Happy 18th Birthday 🎂✨</div>
+
+  <button class="openBtn" onclick="startMagic()">Open Your Birthday Surprise 💖</button>
+
   <div class="message" id="typedText"></div>
 </div>
 
-<div class="tap">Tap anywhere to open your birthday universe 💫</div>
-
 <script>
 
-/* Generate Stars */
+/* Stars */
 for(let i=0;i<120;i++){
   let star=document.createElement("div");
   star.className="star";
@@ -164,7 +175,7 @@ for(let i=0;i<120;i++){
   document.body.appendChild(star);
 }
 
-/* Shooting Star Interval */
+/* Shooting Star */
 setInterval(()=>{
   let shoot=document.createElement("div");
   shoot.className="shooting";
@@ -188,40 +199,44 @@ function createParticle(){
 }
 setInterval(createParticle,700);
 
-/* Long Birthday Message */
+/* Message */
 const message=`Oisweyee,
 
-Today the universe celebrates you.
+Today is not just a birthday.
+It’s the celebration of your journey, your growth, your strength.
 
-Eighteen years ago, the world became brighter. Not because of fireworks or stars — but because someone kind, strong, and quietly beautiful entered it.
+You are stepping into adulthood with grace and courage.
+May your dreams be fearless.
+May your heart stay soft but powerful.
+May every step you take lead you toward happiness.
 
-You are stepping into a new chapter of life. A chapter filled with freedom, dreams, ambition, and discoveries. May you walk through it with confidence. May your heart stay soft but fearless. May your smile never fade.
+You deserve love that is calm.
+Success that is earned.
+And peace that is real.
 
-On this special day, I wish you peace when things feel heavy, courage when things feel uncertain, and happiness that feels real and lasting.
-
-If the sky could speak tonight, it would whisper your name.
-
-Happy Birthday, Oisweyee. 💖✨`;
+Happy 18th Birthday.
+May your universe always shine brighter than the stars above you. 💖✨`;
 
 let index=0;
 let started=false;
 
-function typeWriter(){
-  if(index<message.length){
-    document.getElementById("typedText").innerHTML+=message.charAt(index);
-    index++;
-    setTimeout(typeWriter,30);
-  }
-}
+function startMagic(){
+  if(started) return;
+  started=true;
 
-/* Tap Anywhere */
-document.body.addEventListener("click",()=>{
-  if(!started){
-    started=true;
-    document.querySelector(".tap").style.display="none";
-    typeWriter();
+  const msgBox=document.getElementById("typedText");
+  msgBox.style.opacity="1";
+
+  function typeWriter(){
+    if(index<message.length){
+      msgBox.innerHTML+=message.charAt(index);
+      index++;
+      setTimeout(typeWriter,30);
+    }
   }
-});
+
+  typeWriter();
+}
 
 </script>
 
