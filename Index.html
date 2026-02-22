@@ -3,521 +3,293 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Clarity Studio Pricing Calculator</title>
+  <title>Celebration Card</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="/_sdk/element_sdk.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&amp;family=DM+Sans:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&amp;family=Quicksand:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; }
-    
-    .font-display { font-family: 'Playfair Display', Georgia, serif; }
-    .font-body { font-family: 'DM Sans', system-ui, sans-serif; }
-    
-    .gradient-text {
-      background: linear-gradient(135deg, #2d2d2d 0%, #5a5a5a 50%, #2d2d2d 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    
-    .glass-card {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.6);
-    }
-    
-    .noise-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
+
+    html, body, #app {
       height: 100%;
-      pointer-events: none;
-      opacity: 0.03;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
+      width: 100%;
     }
-    
-    .slider-track {
-      -webkit-appearance: none;
-      appearance: none;
-      height: 6px;
-      border-radius: 3px;
-      background: linear-gradient(90deg, #d4a574 0%, #c9956a var(--progress), #e8e0d8 var(--progress), #e8e0d8 100%);
-      outline: none;
-      cursor: pointer;
-    }
-    
-    .slider-track::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #d4a574 0%, #c9956a 100%);
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(201, 149, 106, 0.4);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    
-    .slider-track::-webkit-slider-thumb:hover {
-      transform: scale(1.15);
-      box-shadow: 0 6px 16px rgba(201, 149, 106, 0.5);
-    }
-    
-    .slider-track::-moz-range-thumb {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #d4a574 0%, #c9956a 100%);
-      cursor: pointer;
-      border: none;
-      box-shadow: 0 4px 12px rgba(201, 149, 106, 0.4);
-    }
-    
-    .service-card {
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    .service-card:hover {
-      transform: translateY(-4px);
-    }
-    
-    .service-card.selected {
-      border-color: #c9956a;
-      box-shadow: 0 0 0 3px rgba(201, 149, 106, 0.2);
-    }
-    
-    .total-display {
-      background: linear-gradient(135deg, #2d2d2d 0%, #3d3d3d 100%);
-      position: relative;
+
+    body {
+      font-family: 'Quicksand', sans-serif;
       overflow: hidden;
     }
-    
-    .total-display::before {
-      content: '';
+
+    .font-dancing { font-family: 'Dancing Script', cursive; }
+    .font-quicksand { font-family: 'Quicksand', sans-serif; }
+
+    @keyframes confetti-fall {
+      0% { 
+        transform: translateY(-100vh) rotateZ(0deg); 
+        opacity: 1; 
+      }
+      100% { 
+        transform: translateY(100vh) rotateZ(720deg); 
+        opacity: 0; 
+      }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-25px) rotate(8deg); }
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(255, 105, 180, 0.4); transform: scale(1); }
+      50% { box-shadow: 0 0 40px rgba(255, 105, 180, 0.8), 0 0 60px rgba(147, 197, 253, 0.5); transform: scale(1.05); }
+    }
+
+    @keyframes rainbow-shift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes bounce-in {
+      0% { transform: scale(0) rotateZ(-20deg); opacity: 0; }
+      50% { transform: scale(1.1) rotateZ(5deg); }
+      100% { transform: scale(1) rotateZ(0deg); opacity: 1; }
+    }
+
+    @keyframes slide-up {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes heart-beat {
+      0%, 100% { transform: scale(1); }
+      25% { transform: scale(1.15); }
+      50% { transform: scale(1); }
+      75% { transform: scale(1.2); }
+    }
+
+    .page {
       position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(201, 149, 106, 0.15) 0%, transparent 50%);
-      animation: shimmer 8s ease-in-out infinite;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    
-    @keyframes shimmer {
-      0%, 100% { transform: translate(0, 0); }
-      50% { transform: translate(30%, 30%); }
+
+    .page.active {
+      opacity: 1;
+      pointer-events: auto;
     }
-    
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+
+    .welcome-bg {
+      background: linear-gradient(135deg, #a5c4e8 0%, #f8b4d9 50%, #fcd5ce 100%);
     }
-    
-    .animate-fade-in {
-      animation: fadeInUp 0.6s ease-out forwards;
+
+    .celebration-bg {
+      background: linear-gradient(135deg, #FF6B9D 0%, #FFB347 20%, #87CEEB 40%, #DDA0DD 60%, #98FB98 80%, #FF6B9D 100%);
+      background-size: 400% 400%;
+      animation: rainbow-shift 8s ease infinite;
     }
-    
-    .animate-delay-1 { animation-delay: 0.1s; opacity: 0; }
-    .animate-delay-2 { animation-delay: 0.2s; opacity: 0; }
-    .animate-delay-3 { animation-delay: 0.3s; opacity: 0; }
-    .animate-delay-4 { animation-delay: 0.4s; opacity: 0; }
-    
-    .count-btn {
-      transition: all 0.2s ease;
+
+    .confetti-piece {
+      position: fixed;
+      pointer-events: none;
+      animation: confetti-fall linear forwards;
     }
-    
-    .count-btn:active {
-      transform: scale(0.92);
+
+    .floating-emoji {
+      display: inline-block;
+      animation: float 3s ease-in-out infinite;
     }
-    
-    .cta-button {
-      background: linear-gradient(135deg, #c9956a 0%, #d4a574 50%, #c9956a 100%);
-      background-size: 200% 200%;
-      transition: all 0.4s ease;
+
+    .btn-celebrate {
+      animation: pulse-glow 2s ease-in-out infinite;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    
-    .cta-button:hover {
-      background-position: 100% 100%;
-      box-shadow: 0 8px 24px rgba(201, 149, 106, 0.4);
-      transform: translateY(-2px);
+
+    .btn-celebrate:hover {
+      transform: scale(1.08);
+    }
+
+    .btn-celebrate:active {
+      transform: scale(0.95);
+    }
+
+    .message-card {
+      animation: bounce-in 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    .stagger-1 { animation: slide-up 0.8s ease-out forwards; animation-delay: 0.2s; }
+    .stagger-2 { animation: slide-up 0.8s ease-out forwards; animation-delay: 0.4s; }
+    .stagger-3 { animation: slide-up 0.8s ease-out forwards; animation-delay: 0.6s; }
+    .stagger-4 { animation: slide-up 0.8s ease-out forwards; animation-delay: 0.8s; }
+
+    .heart-pulse {
+      animation: heart-beat 1.5s ease-in-out infinite;
+    }
+
+    .message-container {
+      max-height: 65vh;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+    }
+
+    .message-container::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .message-container::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+    }
+
+    .message-container::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 10px;
+    }
+
+    .message-container::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.7);
     }
   </style>
   <style>body { box-sizing: border-box; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
  </head>
- <body class="h-full font-body text-neutral-800 overflow-auto" style="background: linear-gradient(135deg, #f8f5f1 0%, #f0ebe4 50%, #e8e0d8 100%);">
-  <div class="noise-overlay"></div>
-  <div class="min-h-full w-full relative z-10"><!-- Header -->
-   <header class="pt-8 pb-6 px-4 sm:px-6 lg:px-8 text-center animate-fade-in">
-    <div class="max-w-4xl mx-auto">
-     <div class="inline-flex items-center gap-2 mb-4">
-      <svg class="w-8 h-8 text-amber-700" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3" /> <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
-      </svg>
+ <body class="h-full overflow-hidden">
+  <div id="app" class="h-full w-full relative overflow-hidden"><!-- Page 1: Welcome Card -->
+   <div id="page1" class="page active welcome-bg h-full w-full flex flex-col items-center justify-center p-6">
+    <div class="text-center max-w-md"><!-- Decorative SVG Star -->
+     <svg class="w-28 h-28 mx-auto mb-8 stagger-1" viewbox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="48" stroke="#FF69B4" stroke-width="2" opacity="0.3" /> <path d="M50 20 L61 40 L82 40 L65 55 L73 75 L50 60 L27 75 L35 55 L18 40 L39 40 Z" fill="#FF69B4" opacity="0.85" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.1))" />
+     </svg><!-- Main Title -->
+     <h1 id="page1-title" class="font-dancing text-5xl font-bold mb-3 text-white stagger-2" style="text-shadow: 0 4px 8px rgba(0,0,0,0.15);">Hello! 🎉</h1><!-- Recipient Name -->
+     <p id="page1-name" class="font-quicksand text-2xl font-bold text-white mb-6 stagger-2" style="text-shadow: 0 2px 4px rgba(0,0,0,0.15);">Oisweyee</p><!-- Preview Card -->
+     <div class="bg-white bg-opacity-90 rounded-3xl p-8 mb-8 backdrop-blur-sm stagger-3 shadow-xl">
+      <p class="text-gray-700 text-lg font-semibold mb-3">Something special is waiting...</p>
+      <p class="text-sm text-gray-600 leading-relaxed">A heartfelt birthday message with confetti, celebration, and all the love! ✨</p>
+     </div><!-- Celebrate Button --> <button id="celebrate-btn" class="btn-celebrate bg-gradient-to-r from-pink-500 via-red-500 to-pink-600 hover:from-pink-600 hover:via-red-600 hover:to-pink-700 text-white font-bold py-4 px-12 rounded-full text-xl shadow-2xl stagger-4" style="backdrop-filter: blur(4px);"> Let's Celebrate! 🎈 </button> <!-- Floating Emojis -->
+     <div class="mt-8 flex justify-center gap-6"><span class="floating-emoji text-4xl">🎂</span> <span class="floating-emoji text-4xl" style="animation-delay: 0.5s;">🎁</span> <span class="floating-emoji text-4xl" style="animation-delay: 1s;">🌟</span>
      </div>
-     <h1 id="business-name" class="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold gradient-text mb-3">Clarity Studio</h1>
-     <p id="tagline" class="text-neutral-500 text-lg sm:text-xl tracking-wide uppercase font-light">Fine Art Photography</p>
     </div>
-   </header><!-- Main Calculator -->
-   <main class="px-4 sm:px-6 lg:px-8 pb-12">
-    <div class="max-w-5xl mx-auto"><!-- Session Type Selection -->
-     <section class="mb-10 animate-fade-in animate-delay-1">
-      <h2 class="font-display text-2xl sm:text-3xl text-center mb-6 text-neutral-700">Select Your Session</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-6"><button onclick="selectSession('intimate')" id="session-intimate" class="service-card glass-card rounded-2xl p-6 text-left border-2 border-transparent cursor-pointer">
-        <div class="flex items-start justify-between mb-4">
-         <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center">
-          <svg class="w-6 h-6 text-amber-700" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" /> <path d="M12 8v4l2 2" />
-          </svg>
-         </div><span class="text-2xl font-display text-amber-700">$150</span>
-        </div><h3 class="font-display text-xl mb-2 text-neutral-800">Intimate</h3><p class="text-neutral-500 text-sm leading-relaxed">1 hour session, perfect for headshots &amp; mini sessions</p>
-        <div class="mt-4 pt-4 border-t border-neutral-200"><span class="text-xs text-neutral-400 uppercase tracking-wider">Per Hour</span>
-        </div></button> <button onclick="selectSession('signature')" id="session-signature" class="service-card glass-card rounded-2xl p-6 text-left border-2 border-transparent cursor-pointer">
-        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-700 text-white text-xs px-3 py-1 rounded-full font-medium tracking-wide" style="position: relative; top: -12px; margin-bottom: -12px;">
-         POPULAR
-        </div>
-        <div class="flex items-start justify-between mb-4">
-         <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center">
-          <svg class="w-6 h-6 text-amber-700" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" /> <circle cx="12" cy="13" r="4" />
-          </svg>
-         </div><span class="text-2xl font-display text-amber-700">$200</span>
-        </div><h3 class="font-display text-xl mb-2 text-neutral-800">Signature</h3><p class="text-neutral-500 text-sm leading-relaxed">2-3 hour coverage, ideal for portraits &amp; events</p>
-        <div class="mt-4 pt-4 border-t border-neutral-200"><span class="text-xs text-neutral-400 uppercase tracking-wider">Per Hour</span>
-        </div></button> <button onclick="selectSession('luxury')" id="session-luxury" class="service-card glass-card rounded-2xl p-6 text-left border-2 border-transparent cursor-pointer">
-        <div class="flex items-start justify-between mb-4">
-         <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center">
-          <svg class="w-6 h-6 text-amber-700" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-          </svg>
-         </div><span class="text-2xl font-display text-amber-700">$250</span>
-        </div><h3 class="font-display text-xl mb-2 text-neutral-800">Luxury</h3><p class="text-neutral-500 text-sm leading-relaxed">Full day experience with creative direction</p>
-        <div class="mt-4 pt-4 border-t border-neutral-200"><span class="text-xs text-neutral-400 uppercase tracking-wider">Per Hour</span>
-        </div></button>
+   </div><!-- Page 2: Celebration Message -->
+   <div id="page2" class="page celebration-bg h-full w-full flex flex-col items-center justify-center p-6 overflow-hidden">
+    <div class="w-full h-full flex flex-col items-center justify-center"><!-- Celebration Header -->
+     <div class="text-center mb-6">
+      <h1 id="page2-title" class="font-dancing text-5xl md:text-6xl font-bold text-white mb-2 stagger-1" style="text-shadow: 0 4px 8px rgba(0,0,0,0.2);">Happy 18th Birthday!</h1>
+      <p class="text-3xl text-white font-bold stagger-1" style="animation-delay: 0.1s; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">🎉 🥳 🎈 🎂</p>
+     </div><!-- Message Container -->
+     <div class="message-container w-full max-w-2xl mx-auto px-4">
+      <div class="message-card bg-white bg-opacity-95 rounded-3xl p-8 md:p-12 shadow-2xl backdrop-blur-sm"><!-- Recipient Name -->
+       <p id="page2-name" class="text-center text-2xl md:text-3xl font-bold text-pink-600 mb-6 stagger-2">Oisweyee</p><!-- Tagline -->
+       <p id="tagline" class="text-center text-xl md:text-2xl font-bold text-pink-500 mb-6 stagger-2" style="animation-delay: 0.15s;">My First And Last Love💕 😘 🎈</p><!-- Main Message -->
+       <p id="main-msg" class="text-center text-gray-800 text-sm md:text-base leading-relaxed stagger-3" style="animation-delay: 0.2s;">They say 18 is the start of a new chapter, but to me, you've always been the best part of the story. 📖✨</p>
+       <p class="text-center text-gray-700 text-sm md:text-base leading-relaxed my-6 stagger-3" style="animation-delay: 0.3s;">I hope your day is as beautiful and unique as your soul. 🌸 Watching you chase your dreams is one of my favorite things, and I'll always be here cheering you on from the front row. May this year be the one where everything falls into place for you. Enjoy your big day to the fullest! 🥂💫❤️</p><!-- Heart Signature -->
+       <div class="text-center mt-8 stagger-4" style="animation-delay: 0.4s;"><span class="text-5xl heart-pulse inline-block">💕</span>
+       </div>
       </div>
-     </section><!-- Duration & Add-ons -->
-     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-10"><!-- Duration Slider -->
-      <section class="glass-card rounded-2xl p-6 sm:p-8 animate-fade-in animate-delay-2">
-       <h3 class="font-display text-xl mb-6 text-neutral-700">Session Duration</h3>
-       <div class="mb-6">
-        <div class="flex justify-between items-end mb-4"><span class="text-neutral-500">Hours</span> <span id="hours-display" class="font-display text-4xl text-amber-700">2</span>
-        </div><input type="range" id="hours-slider" min="1" max="8" value="2" class="w-full slider-track" style="--progress: 14.28%;" oninput="updateHours(this.value)">
-        <div class="flex justify-between mt-2 text-xs text-neutral-400"><span>1 hr</span> <span>8 hrs</span>
-        </div>
-       </div>
-       <div class="bg-amber-50 rounded-xl p-4 border border-amber-100">
-        <div class="flex justify-between items-center"><span class="text-neutral-600">Session Subtotal</span> <span id="session-subtotal" class="font-display text-2xl text-amber-700">$400</span>
-        </div>
-       </div>
-      </section><!-- Editing Package -->
-      <section class="glass-card rounded-2xl p-6 sm:p-8 animate-fade-in animate-delay-3">
-       <h3 class="font-display text-xl mb-6 text-neutral-700">Edited Images</h3>
-       <div class="mb-6">
-        <div class="flex items-center justify-between">
-         <div>
-          <p class="text-neutral-600 mb-1">Number of retouched images</p>
-          <p class="text-sm text-neutral-400">$50 per image</p>
-         </div>
-         <div class="flex items-center gap-3"><button onclick="updateImages(-5)" class="count-btn w-10 h-10 rounded-full bg-neutral-100 hover:bg-neutral-200 flex items-center justify-center text-neutral-600 font-semibold">
-           <svg class="w-5 h-5" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14" />
-           </svg></button> <span id="images-count" class="font-display text-3xl text-amber-700 w-16 text-center">10</span> <button onclick="updateImages(5)" class="count-btn w-10 h-10 rounded-full bg-neutral-100 hover:bg-neutral-200 flex items-center justify-center text-neutral-600 font-semibold">
-           <svg class="w-5 h-5" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" />
-           </svg></button>
-         </div>
-        </div>
-       </div>
-       <div class="bg-amber-50 rounded-xl p-4 border border-amber-100">
-        <div class="flex justify-between items-center"><span class="text-neutral-600">Editing Subtotal</span> <span id="editing-subtotal" class="font-display text-2xl text-amber-700">$500</span>
-        </div>
-       </div>
-      </section>
-     </div><!-- Album Options -->
-     <section class="glass-card rounded-2xl p-6 sm:p-8 mb-10 animate-fade-in animate-delay-4">
-      <h3 class="font-display text-xl mb-6 text-neutral-700">Premium Albums</h3>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4"><button onclick="toggleAlbum('none')" id="album-none" class="service-card rounded-xl p-5 text-left border-2 border-neutral-200 hover:border-neutral-300 bg-white/50 cursor-pointer">
-        <div class="flex items-center justify-between mb-3">
-         <div class="w-10 h-10 rounded-lg bg-neutral-100 flex items-center justify-center">
-          <svg class="w-5 h-5 text-neutral-400" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12" />
-          </svg>
-         </div><span id="album-none-check" class="w-6 h-6 rounded-full border-2 border-neutral-300 flex items-center justify-center"> </span>
-        </div><h4 class="font-medium text-neutral-700 mb-1">No Album</h4><p class="text-sm text-neutral-400">Digital delivery only</p><p class="font-display text-xl text-neutral-500 mt-3">$0</p></button> <button onclick="toggleAlbum('classic')" id="album-classic" class="service-card rounded-xl p-5 text-left border-2 border-neutral-200 hover:border-neutral-300 bg-white/50 cursor-pointer">
-        <div class="flex items-center justify-between mb-3">
-         <div class="w-10 h-10 rounded-lg bg-amber-50 flex items-center justify-center">
-          <svg class="w-5 h-5 text-amber-600" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /> <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-          </svg>
-         </div><span id="album-classic-check" class="w-6 h-6 rounded-full border-2 border-neutral-300 flex items-center justify-center"> </span>
-        </div><h4 class="font-medium text-neutral-700 mb-1">Classic Album</h4><p class="text-sm text-neutral-400">20 pages, linen cover</p><p class="font-display text-xl text-amber-700 mt-3">$100</p></button> <button onclick="toggleAlbum('heirloom')" id="album-heirloom" class="service-card rounded-xl p-5 text-left border-2 border-neutral-200 hover:border-neutral-300 bg-white/50 cursor-pointer">
-        <div class="flex items-center justify-between mb-3">
-         <div class="w-10 h-10 rounded-lg bg-amber-50 flex items-center justify-center">
-          <svg class="w-5 h-5 text-amber-600" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2" /> <circle cx="8.5" cy="8.5" r="1.5" /> <polyline points="21 15 16 10 5 21" />
-          </svg>
-         </div><span id="album-heirloom-check" class="w-6 h-6 rounded-full border-2 border-neutral-300 flex items-center justify-center"> </span>
-        </div><h4 class="font-medium text-neutral-700 mb-1">Heirloom Album</h4><p class="text-sm text-neutral-400">40 pages, leather cover</p><p class="font-display text-xl text-amber-700 mt-3">$300</p></button>
-      </div>
-     </section><!-- Total Display -->
-     <section class="total-display rounded-3xl p-8 sm:p-10 text-white text-center relative overflow-hidden">
-      <div class="relative z-10">
-       <p class="text-amber-200 uppercase tracking-widest text-sm mb-2">Your Investment</p>
-       <p id="total-amount" class="font-display text-5xl sm:text-6xl lg:text-7xl font-semibold mb-6">$900</p>
-       <div class="flex flex-wrap justify-center gap-4 sm:gap-6 mb-8 text-sm">
-        <div class="bg-white/10 rounded-full px-4 py-2"><span id="summary-session" class="text-amber-200">Signature</span> <span class="text-white/60 mx-2">•</span> <span id="summary-hours" class="text-white">2 hours</span>
-        </div>
-        <div class="bg-white/10 rounded-full px-4 py-2"><span id="summary-images" class="text-white">10 images</span>
-        </div>
-        <div id="summary-album-container" class="bg-white/10 rounded-full px-4 py-2 hidden"><span id="summary-album" class="text-white">No Album</span>
-        </div>
-       </div><button id="cta-button" class="cta-button text-white font-semibold px-10 py-4 rounded-full text-lg tracking-wide"> Book Your Session </button>
-      </div>
-     </section>
+     </div><!-- Back Button --> <button id="back-btn" class="mt-8 bg-white bg-opacity-80 hover:bg-opacity-100 text-pink-600 font-bold py-3 px-8 rounded-full transition-all duration-300 shadow-lg stagger-4" style="animation-delay: 0.5s;"> ← Back </button>
     </div>
-   </main>
+   </div>
   </div>
   <script>
-    // Default configuration
+    // Element SDK Configuration
     const defaultConfig = {
-      business_name: 'Clarity Studio',
-      tagline: 'Fine Art Photography',
-      cta_text: 'Book Your Session',
-      primary_color: '#f8f5f1',
-      secondary_color: '#ffffff',
-      text_color: '#2d2d2d',
-      accent_color: '#c9956a',
-      button_text_color: '#ffffff',
-      font_family: 'Playfair Display',
-      font_size: 16
+      recipient_name: 'Oisweyee',
+      celebration_type: 'Happy 18th Birthday!',
+      tagline: 'My First And Last Love💕 😘 🎈',
+      main_message: 'They say 18 is the start of a new chapter, but to me, you\'ve always been the best part of the story. 📖✨ I hope your day is as beautiful and unique as your soul. 🌸 Watching you chase your dreams is one of my favorite things, and I\'ll always be here cheering you on from the front row. May this year be the one where everything falls into place for you. Enjoy your big day to the fullest! 🥂💫❤️'
     };
-    
-    // Calculator state
-    let state = {
-      session: 'signature',
-      sessionRate: 200,
-      hours: 2,
-      images: 10,
-      album: 'none',
-      albumPrice: 0
-    };
-    
-    const sessionRates = {
-      intimate: 150,
-      signature: 200,
-      luxury: 250
-    };
-    
-    const albumPrices = {
-      none: 0,
-      classic: 100,
-      heirloom: 300
-    };
-    
-    function selectSession(type) {
-      state.session = type;
-      state.sessionRate = sessionRates[type];
-      
-      document.querySelectorAll('[id^="session-"]').forEach(card => {
-        card.classList.remove('selected');
-      });
-      document.getElementById(`session-${type}`).classList.add('selected');
-      
-      calculateTotal();
-    }
-    
-    function updateHours(value) {
-      state.hours = parseInt(value);
-      document.getElementById('hours-display').textContent = value;
-      
-      const progress = ((value - 1) / 7) * 100;
-      document.getElementById('hours-slider').style.setProperty('--progress', `${progress}%`);
-      
-      calculateTotal();
-    }
-    
-    function updateImages(delta) {
-      state.images = Math.max(0, Math.min(100, state.images + delta));
-      document.getElementById('images-count').textContent = state.images;
-      calculateTotal();
-    }
-    
-    function toggleAlbum(type) {
-      state.album = type;
-      state.albumPrice = albumPrices[type];
-      
-      document.querySelectorAll('[id^="album-"]:not([id$="-check"])').forEach(card => {
-        if (card.id.startsWith('album-') && !card.id.endsWith('-check') && !card.id.endsWith('-container')) {
-          card.classList.remove('selected');
-          card.style.borderColor = '';
-        }
-      });
-      
-      const selectedCard = document.getElementById(`album-${type}`);
-      if (selectedCard) {
-        selectedCard.classList.add('selected');
-        selectedCard.style.borderColor = '#c9956a';
-      }
-      
-      document.querySelectorAll('[id$="-check"]').forEach(check => {
-        check.innerHTML = '';
-        check.style.background = '';
-        check.style.borderColor = '#d1d5db';
-      });
-      
-      const checkmark = document.getElementById(`album-${type}-check`);
-      if (checkmark) {
-        checkmark.innerHTML = `<svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>`;
-        checkmark.style.background = '#c9956a';
-        checkmark.style.borderColor = '#c9956a';
-      }
-      
-      calculateTotal();
-    }
-    
-    function calculateTotal() {
-      const sessionTotal = state.sessionRate * state.hours;
-      const editingTotal = state.images * 50;
-      const total = sessionTotal + editingTotal + state.albumPrice;
-      
-      document.getElementById('session-subtotal').textContent = `$${sessionTotal.toLocaleString()}`;
-      document.getElementById('editing-subtotal').textContent = `$${editingTotal.toLocaleString()}`;
-      document.getElementById('total-amount').textContent = `$${total.toLocaleString()}`;
-      
-      const sessionNames = { intimate: 'Intimate', signature: 'Signature', luxury: 'Luxury' };
-      document.getElementById('summary-session').textContent = sessionNames[state.session];
-      document.getElementById('summary-hours').textContent = `${state.hours} hour${state.hours > 1 ? 's' : ''}`;
-      document.getElementById('summary-images').textContent = `${state.images} image${state.images !== 1 ? 's' : ''}`;
-      
-      const albumContainer = document.getElementById('summary-album-container');
-      const albumNames = { none: 'No Album', classic: 'Classic Album', heirloom: 'Heirloom Album' };
-      if (state.album !== 'none') {
-        albumContainer.classList.remove('hidden');
-        document.getElementById('summary-album').textContent = albumNames[state.album];
-      } else {
-        albumContainer.classList.add('hidden');
-      }
-    }
-    
-    async function onConfigChange(config) {
-      const businessName = config.business_name || defaultConfig.business_name;
-      const tagline = config.tagline || defaultConfig.tagline;
-      const ctaText = config.cta_text || defaultConfig.cta_text;
-      const primaryColor = config.primary_color || defaultConfig.primary_color;
-      const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
-      const textColor = config.text_color || defaultConfig.text_color;
-      const accentColor = config.accent_color || defaultConfig.accent_color;
-      const buttonTextColor = config.button_text_color || defaultConfig.button_text_color;
-      const fontFamily = config.font_family || defaultConfig.font_family;
-      const fontSize = config.font_size || defaultConfig.font_size;
-      
-      document.getElementById('business-name').textContent = businessName;
-      document.getElementById('tagline').textContent = tagline;
-      document.getElementById('cta-button').textContent = ctaText;
-      
-      document.body.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${adjustColor(primaryColor, -5)} 50%, ${adjustColor(primaryColor, -10)} 100%)`;
-      
-      document.querySelectorAll('.glass-card').forEach(el => {
-        el.style.background = `rgba(${hexToRgb(secondaryColor)}, 0.85)`;
-      });
-      
-      document.querySelectorAll('.font-display').forEach(el => {
-        el.style.fontFamily = `${fontFamily}, Georgia, serif`;
-      });
-      
-      const baseSize = fontSize;
-      document.querySelectorAll('h1').forEach(el => el.style.fontSize = `${baseSize * 3}px`);
-      document.querySelectorAll('h2').forEach(el => el.style.fontSize = `${baseSize * 1.875}px`);
-      document.querySelectorAll('h3').forEach(el => el.style.fontSize = `${baseSize * 1.25}px`);
-      document.querySelectorAll('p, span').forEach(el => {
-        if (!el.closest('.font-display')) {
-          el.style.fontSize = `${baseSize}px`;
-        }
-      });
-      
-      document.body.style.color = textColor;
-      
-      document.querySelectorAll('.text-amber-700, .text-amber-600').forEach(el => {
-        el.style.color = accentColor;
-      });
-      
-      const ctaButton = document.getElementById('cta-button');
-      ctaButton.style.background = `linear-gradient(135deg, ${accentColor} 0%, ${adjustColor(accentColor, 10)} 50%, ${accentColor} 100%)`;
-      ctaButton.style.color = buttonTextColor;
-    }
-    
-    function adjustColor(hex, percent) {
-      const num = parseInt(hex.replace('#', ''), 16);
-      const amt = Math.round(2.55 * percent);
-      const R = Math.max(0, Math.min(255, (num >> 16) + amt));
-      const G = Math.max(0, Math.min(255, ((num >> 8) & 0x00FF) + amt));
-      const B = Math.max(0, Math.min(255, (num & 0x0000FF) + amt));
-      return '#' + (0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1);
-    }
-    
-    function hexToRgb(hex) {
-      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-      return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '255, 255, 255';
-    }
-    
-    function mapToCapabilities(config) {
-      return {
-        recolorables: [
-          {
-            get: () => config.primary_color || defaultConfig.primary_color,
-            set: (value) => { config.primary_color = value; window.elementSdk.setConfig({ primary_color: value }); }
-          },
-          {
-            get: () => config.secondary_color || defaultConfig.secondary_color,
-            set: (value) => { config.secondary_color = value; window.elementSdk.setConfig({ secondary_color: value }); }
-          },
-          {
-            get: () => config.text_color || defaultConfig.text_color,
-            set: (value) => { config.text_color = value; window.elementSdk.setConfig({ text_color: value }); }
-          },
-          {
-            get: () => config.accent_color || defaultConfig.accent_color,
-            set: (value) => { config.accent_color = value; window.elementSdk.setConfig({ accent_color: value }); }
-          },
-          {
-            get: () => config.button_text_color || defaultConfig.button_text_color,
-            set: (value) => { config.button_text_color = value; window.elementSdk.setConfig({ button_text_color: value }); }
-          }
-        ],
+
+    let config = { ...defaultConfig };
+
+    window.elementSdk.init({
+      defaultConfig,
+      onConfigChange: async (newConfig) => {
+        config = { ...config, ...newConfig };
+        updateCardContent();
+      },
+      mapToCapabilities: (cfg) => ({
+        recolorables: [],
         borderables: [],
-        fontEditable: {
-          get: () => config.font_family || defaultConfig.font_family,
-          set: (value) => { config.font_family = value; window.elementSdk.setConfig({ font_family: value }); }
-        },
-        fontSizeable: {
-          get: () => config.font_size || defaultConfig.font_size,
-          set: (value) => { config.font_size = value; window.elementSdk.setConfig({ font_size: value }); }
-        }
-      };
+        fontEditable: undefined,
+        fontSizeable: undefined
+      }),
+      mapToEditPanelValues: (cfg) => new Map([
+        ['recipient_name', cfg.recipient_name || defaultConfig.recipient_name],
+        ['celebration_type', cfg.celebration_type || defaultConfig.celebration_type],
+        ['tagline', cfg.tagline || defaultConfig.tagline],
+        ['main_message', cfg.main_message || defaultConfig.main_message]
+      ])
+    });
+
+    function updateCardContent() {
+      document.getElementById('page1-name').textContent = config.recipient_name;
+      document.getElementById('page2-name').textContent = config.recipient_name;
+      document.getElementById('page2-title').textContent = config.celebration_type;
+      document.getElementById('tagline').textContent = config.tagline;
+      document.getElementById('main-msg').textContent = config.main_message;
     }
-    
-    function mapToEditPanelValues(config) {
-      return new Map([
-        ['business_name', config.business_name || defaultConfig.business_name],
-        ['tagline', config.tagline || defaultConfig.tagline],
-        ['cta_text', config.cta_text || defaultConfig.cta_text]
-      ]);
+
+    // Page Navigation
+    const page1 = document.getElementById('page1');
+    const page2 = document.getElementById('page2');
+    const celebrateBtn = document.getElementById('celebrate-btn');
+    const backBtn = document.getElementById('back-btn');
+
+    celebrateBtn.addEventListener('click', () => {
+      page1.classList.remove('active');
+      page2.classList.add('active');
+      createConfetti();
+    });
+
+    backBtn.addEventListener('click', () => {
+      page2.classList.remove('active');
+      page1.classList.add('active');
+    });
+
+    // Confetti Generator
+    function createConfetti() {
+      const colors = ['#FF6B9D', '#FFB347', '#87CEEB', '#DDA0DD', '#98FB98', '#FFD700', '#FF69B4', '#FF1493'];
+      const shapes = ['circle', 'square', 'circle'];
+      const confettiCount = 100;
+
+      for (let i = 0; i < confettiCount; i++) {
+        setTimeout(() => {
+          const confetti = document.createElement('div');
+          confetti.className = 'confetti-piece';
+
+          const size = Math.random() * 14 + 6;
+          const left = Math.random() * 100;
+          const duration = Math.random() * 2.5 + 2;
+          const delay = Math.random() * 0.3;
+          const shape = shapes[Math.floor(Math.random() * shapes.length)];
+          const color = colors[Math.floor(Math.random() * colors.length)];
+
+          confetti.style.left = left + '%';
+          confetti.style.top = '-30px';
+          confetti.style.width = size + 'px';
+          confetti.style.height = size + 'px';
+          confetti.style.backgroundColor = color;
+          confetti.style.opacity = Math.random() * 0.8 + 0.4;
+          confetti.style.borderRadius = shape === 'circle' ? '50%' : '0';
+          confetti.style.animationDuration = duration + 's';
+          confetti.style.animationDelay = delay + 's';
+          confetti.style.boxShadow = `0 0 ${Math.random() * 10 + 5}px ${color}`;
+
+          document.getElementById('app').appendChild(confetti);
+
+          setTimeout(() => confetti.remove(), (duration + delay) * 1000 + 100);
+        }, i * 25);
+      }
     }
-    
-    // Initialize
-    if (window.elementSdk) {
-      window.elementSdk.init({
-        defaultConfig,
-        onConfigChange,
-        mapToCapabilities,
-        mapToEditPanelValues
-      });
-    }
-    
-    // Set initial states
-    selectSession('signature');
-    toggleAlbum('none');
-    calculateTotal();
+
+    // Initialize content
+    updateCardContent();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d1b6bd5633bf655',t:'MTc3MTczMTE5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d1aeadcb1eef655',t:'MTc3MTcyNTkxNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
