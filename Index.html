@@ -2,34 +2,39 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Oiswee 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Happy Birthday Oisweyee ✨</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-body{
+*{
   margin:0;
-  overflow:hidden;
-  background: radial-gradient(circle at center,#14001f,#000);
-  font-family:'Poppins',sans-serif;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
   height:100vh;
+  overflow:hidden;
+  font-family:'Poppins',sans-serif;
+  background: radial-gradient(circle at center,#19002b,#000);
   color:white;
 }
 
-/* Galaxy Background */
+/* Galaxy Glow */
 .galaxy{
   position:absolute;
   width:200%;
   height:200%;
-  background: radial-gradient(circle,#3a0066 0%,transparent 70%);
-  animation: rotateGalaxy 120s linear infinite;
   top:-50%;
   left:-50%;
-  opacity:0.4;
+  background: radial-gradient(circle,#4b0082 0%,transparent 70%);
+  animation:rotate 120s linear infinite;
+  opacity:0.35;
 }
 
-@keyframes rotateGalaxy{
+@keyframes rotate{
   from{transform:rotate(0deg);}
   to{transform:rotate(360deg);}
 }
@@ -52,10 +57,10 @@ body{
 /* Shooting Star */
 .shooting{
   position:absolute;
-  width:100px;
+  width:120px;
   height:2px;
   background:linear-gradient(90deg,white,transparent);
-  animation:shoot 3s linear infinite;
+  animation:shoot 2.5s linear forwards;
 }
 
 @keyframes shoot{
@@ -69,19 +74,18 @@ body{
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
+  width:90%;
   text-align:center;
-  max-width:500px;
-  padding:20px;
 }
 
-/* Name Glow */
+/* Name */
 .name{
   font-family:'Great Vibes',cursive;
-  font-size:75px;
+  font-size:14vw;
   color:#ff7eb9;
   text-shadow:0 0 10px #ff4fa3,
-              0 0 30px #ff2e8a,
-              0 0 60px #ff0080;
+              0 0 25px #ff2e8a,
+              0 0 50px #ff0080;
   animation:glow 2s infinite alternate;
 }
 
@@ -90,19 +94,26 @@ body{
   to{text-shadow:0 0 40px #ff0080;}
 }
 
+/* Subtitle */
+.subtitle{
+  font-size:5vw;
+  margin-top:5px;
+}
+
 /* Message */
 .message{
   margin-top:20px;
-  font-size:17px;
-  line-height:1.7;
-  min-height:140px;
+  font-size:4vw;
+  line-height:1.6;
+  min-height:150px;
+  padding:10px;
 }
 
-/* Floating Birthday Particles */
+/* Floating Birthday Emojis */
 .particle{
   position:absolute;
   font-size:20px;
-  animation:floatUp 8s linear infinite;
+  animation:floatUp 7s linear infinite;
 }
 
 @keyframes floatUp{
@@ -110,23 +121,22 @@ body{
   to{transform:translateY(-10vh);opacity:0;}
 }
 
-/* Button */
-button{
-  margin-top:20px;
-  padding:12px 30px;
-  border:none;
-  border-radius:30px;
-  background:linear-gradient(45deg,#ff4fa3,#ff7eb9);
-  color:white;
-  font-weight:600;
-  cursor:pointer;
-  box-shadow:0 0 15px #ff4fa3;
-  transition:0.3s;
+/* Tap Text */
+.tap{
+  position:absolute;
+  bottom:20px;
+  width:100%;
+  text-align:center;
+  font-size:3.5vw;
+  opacity:0.7;
+  animation:pulse 2s infinite;
 }
 
-button:hover{
-  transform:scale(1.1);
+@keyframes pulse{
+  0%,100%{opacity:0.4;}
+  50%{opacity:1;}
 }
+
 </style>
 </head>
 
@@ -135,16 +145,17 @@ button:hover{
 <div class="galaxy"></div>
 
 <div class="center">
-  <div class="name">Oiswee</div>
-  <div style="font-size:22px;margin-top:5px;">Happy Birthday 🎂✨</div>
+  <div class="name">Oisweyee</div>
+  <div class="subtitle">Happy 18th Birthday 🎂✨</div>
   <div class="message" id="typedText"></div>
-  <button onclick="startMagic()">Open Your Birthday Universe 💫</button>
 </div>
+
+<div class="tap">Tap anywhere to open your birthday universe 💫</div>
 
 <script>
 
 /* Generate Stars */
-for(let i=0;i<150;i++){
+for(let i=0;i<120;i++){
   let star=document.createElement("div");
   star.className="star";
   star.style.top=Math.random()*100+"%";
@@ -153,17 +164,17 @@ for(let i=0;i<150;i++){
   document.body.appendChild(star);
 }
 
-/* Shooting Star */
+/* Shooting Star Interval */
 setInterval(()=>{
   let shoot=document.createElement("div");
   shoot.className="shooting";
   shoot.style.top=Math.random()*50+"%";
   shoot.style.left=Math.random()*50+"%";
   document.body.appendChild(shoot);
-  setTimeout(()=>shoot.remove(),3000);
-},4000);
+  setTimeout(()=>shoot.remove(),2500);
+},5000);
 
-/* Floating Birthday Emojis */
+/* Floating Emojis */
 const emojis=["🎂","🎉","💖","✨","🌸","🥳"];
 function createParticle(){
   let p=document.createElement("div");
@@ -171,40 +182,46 @@ function createParticle(){
   p.innerHTML=emojis[Math.floor(Math.random()*emojis.length)];
   p.style.left=Math.random()*100+"%";
   p.style.fontSize=(Math.random()*20+15)+"px";
-  p.style.animationDuration=(Math.random()*5+5)+"s";
+  p.style.animationDuration=(Math.random()*4+5)+"s";
   document.body.appendChild(p);
-  setTimeout(()=>p.remove(),8000);
+  setTimeout(()=>p.remove(),7000);
 }
 setInterval(createParticle,700);
 
-/* Long Emotional Birthday Message */
-const message=`Today the universe feels softer, brighter, and more magical — because it’s your day, Oiswee.
+/* Long Birthday Message */
+const message=`Oisweyee,
 
-Eighteen years ago, the world received a soul that carries warmth, light, and quiet strength. You are not just growing older today, you are stepping into a new chapter filled with freedom, dreams, and endless possibilities.
+Today the universe celebrates you.
 
-May this year bring you courage when things feel uncertain, laughter when days feel heavy, and love that feels pure and peaceful.
+Eighteen years ago, the world became brighter. Not because of fireworks or stars — but because someone kind, strong, and quietly beautiful entered it.
 
-You deserve a life where your smile is constant, your ambitions are fearless, and your heart is protected.
+You are stepping into a new chapter of life. A chapter filled with freedom, dreams, ambition, and discoveries. May you walk through it with confidence. May your heart stay soft but fearless. May your smile never fade.
 
-If birthdays were stars, yours would shine the brightest tonight.
+On this special day, I wish you peace when things feel heavy, courage when things feel uncertain, and happiness that feels real and lasting.
 
-Happy Birthday to someone truly rare and beautifully unforgettable. 💖✨`;
+If the sky could speak tonight, it would whisper your name.
+
+Happy Birthday, Oisweyee. 💖✨`;
 
 let index=0;
+let started=false;
 
 function typeWriter(){
   if(index<message.length){
     document.getElementById("typedText").innerHTML+=message.charAt(index);
     index++;
-    setTimeout(typeWriter,35);
+    setTimeout(typeWriter,30);
   }
 }
 
-function startMagic(){
-  document.getElementById("typedText").innerHTML="";
-  index=0;
-  typeWriter();
-}
+/* Tap Anywhere */
+document.body.addEventListener("click",()=>{
+  if(!started){
+    started=true;
+    document.querySelector(".tap").style.display="none";
+    typeWriter();
+  }
+});
 
 </script>
 
