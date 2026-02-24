@@ -2,130 +2,167 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WhatsApp Style Confession</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet"><style>
+<title>Private Confession</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet"><style>
 *{margin:0;padding:0;box-sizing:border-box;}
+
 body{
-    font-family:'Roboto',sans-serif;
-    background:#111b21;
-    height:100vh;
+    font-family:'Poppins',sans-serif;
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color:white;
+    min-height:100vh;
+    overflow-y:auto;
+}
+
+.wrapper{
+    min-height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
+    padding:40px 15px;
 }
 
-.phone{
+.screen{
     width:100%;
-    max-width:420px;
-    height:90vh;
-    background:#0b141a;
-    border-radius:25px;
-    overflow:hidden;
-    box-shadow:0 20px 60px rgba(0,0,0,0.6);
-    display:flex;
-    flex-direction:column;
+    max-width:650px;
+    background:rgba(255,255,255,0.06);
+    backdrop-filter:blur(20px);
+    border-radius:20px;
+    padding:40px;
+    box-shadow:0 25px 70px rgba(0,0,0,0.6);
+    display:none;
+    animation:fadeIn 0.8s ease forwards;
 }
 
-.header{
-    background:#202c33;
-    padding:15px;
-    color:white;
-    font-weight:500;
-}
-
-.chat-area{
-    flex:1;
-    padding:15px;
-    overflow-y:auto;
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-    background-image:url('https://i.imgur.com/3fJ1P48.png');
-    background-size:cover;
-}
-
-.message{
-    max-width:75%;
-    padding:10px 14px;
-    border-radius:12px;
-    font-size:14px;
-    line-height:1.4;
-    animation:fadeIn 0.3s ease;
-}
-
-.sent{
-    background:#005c4b;
-    color:white;
-    align-self:flex-end;
-}
+.active{display:block;}
 
 @keyframes fadeIn{
-    from{opacity:0;transform:translateY(10px);} 
+    from{opacity:0;transform:translateY(30px);} 
     to{opacity:1;transform:translateY(0);} 
 }
 
-.input-area{
-    padding:10px;
-    background:#202c33;
-    display:flex;
-    gap:8px;
+h2{
+    font-weight:400;
+    margin-bottom:20px;
+}
+
+#textArea{
+    min-height:260px;
+    font-size:16px;
+    line-height:1.8;
+    white-space:pre-line;
+}
+
+.cursor{
+    display:inline-block;
+    width:2px;
+    background:white;
+    margin-left:3px;
+    animation:blink 1s infinite;
+}
+
+@keyframes blink{
+    0%,50%,100%{opacity:1;} 
+    25%,75%{opacity:0;} 
+}
+
+button{
+    margin-top:25px;
+    padding:12px 28px;
+    border:none;
+    border-radius:30px;
+    background:linear-gradient(45deg,#4e73df,#1cc88a);
+    color:white;
+    font-size:15px;
+    cursor:pointer;
+    transition:0.3s ease;
+}
+
+button:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(0,0,0,0.4);
 }
 
 input{
-    flex:1;
-    padding:10px;
-    border-radius:20px;
+    width:100%;
+    padding:12px;
+    margin-top:15px;
+    border-radius:12px;
     border:none;
     outline:none;
 }
 
-button{
-    padding:8px 14px;
-    border:none;
-    border-radius:20px;
-    background:#25d366;
-    color:white;
-    cursor:pointer;
-}
+</style></head><body><!-- IMPORTANT: Download "The Night We Met" mp3 and rename it to night.mp3 --><audio id="bgMusic" loop>
+    <source src="night.mp3" type="audio/mpeg">
+</audio><div class="wrapper"><!-- SCREEN 1 --><div class="screen active" id="screen1">
+<h2>Ami Subhajit bolchi...</h2>
+<p>Ami jani tui rege achis. But there is something I need to tell you. Continue click korle shob bolbo.</p>
+<button onclick="startExperience()">Continue</button>
+</div><!-- SCREEN 2 --><div class="screen" id="screen2">
+<div id="textArea"></div><span class="cursor" id="cursor"></span>
+<button id="nextBtn" onclick="showScreen(3)" style="display:none">Next</button>
+</div><!-- SCREEN 3 --><div class="screen" id="screen3">
+<h2>Final Truth</h2>
+<p>
+Keo boluk nai boluk but ami nijer feelings niye sure.Tor jodi na valo lage then amay follow koris na.
 
-</style></head><body><div class="phone">
-<div class="header">Subhajit ❤️</div><div class="chat-area" id="chatBox"></div><div class="input-area">
-<input id="replyInput" placeholder="Type a message">
-<button onclick="sendWhatsApp()">Send</button>
+Jodi mone hoy ekta chance deoa uchit, tahole follow kore nis.
+
+</p>
+<input id="msgBox" placeholder="Write something for me...">
+<button onclick="sendWhatsApp(true)">Follow</button>
+<button onclick="sendWhatsApp(false)" style="background:#c0392b">Unfollow</button>
 </div></div><script>
 
-const messages=[
-"Eto din tui jante cheyechilis j ami tor dike keno takai?",
-"Asol e ajkal I feel something weird... amar tor proti attachment bereche.",
-"Bolte chaini, mone hoyechilo faltu.",
-"Jedin tor sathe kotha bola bondho korlam...",
-"Tokhon bujhlam ami lonely hoye jacchi.",
-"Tui thakle valo lage. Kosto kom hoy.",
-"I feel happy around you."
+const messages = [
+"Eto din tui jante cheyechilis j ami tor dike keno takai?\n\n",
+"Asol e ajkal I feel something weird... amar tor proti attachment bereche.\n\n",
+"Ami bolte chaini karon amar nijer kache eta faltu mone hoyechilo.\n\n",
+"But jedin tor sathe kotha bola bondho korlam... tokhon bujhlam.\n\n",
+"Ami onek lonely feel kortesi.\n\n",
+"Kemon ekta ojana kosto amake kheye felche.\n\n",
+"Tui thakle haste pari. Valo lage. Oto kosto hoy na.\n\n",
+"I don't know why... but I feel happy around you."
 ];
 
-let index=0;
-const chat=document.getElementById('chatBox');
+let msgIndex = 0;
+let charIndex = 0;
+let currentText = '';
 
-function typeMessage(){
-    if(index<messages.length){
-        let msg=document.createElement('div');
-        msg.classList.add('message','sent');
-        msg.innerText=messages[index];
-        chat.appendChild(msg);
-        chat.scrollTop=chat.scrollHeight;
-        index++;
-        setTimeout(typeMessage,1800);
+function startExperience(){
+    document.getElementById('bgMusic').play();
+    showScreen(2);
+    typeWriter();
+}
+
+function typeWriter(){
+    if(msgIndex < messages.length){
+        if(charIndex < messages[msgIndex].length){
+            currentText += messages[msgIndex].charAt(charIndex);
+            document.getElementById('textArea').innerText = currentText;
+            charIndex++;
+            setTimeout(typeWriter, 40);
+        } else {
+            msgIndex++;
+            charIndex = 0;
+            setTimeout(typeWriter, 1000);
+        }
+    } else {
+        document.getElementById('cursor').style.display='none';
+        document.getElementById('nextBtn').style.display='inline-block';
     }
 }
 
-window.onload=()=>{
-    typeMessage();
+function showScreen(n){
+    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+    document.getElementById('screen'+n).classList.add('active');
 }
 
-function sendWhatsApp(){
-    let text=document.getElementById('replyInput').value;
-    let url="https://wa.me/916297432203?text="+encodeURIComponent(text);
+function sendWhatsApp(follow){
+    let msg=document.getElementById('msgBox').value;
+    let base= follow ? "I choose to follow" : "I choose to unfollow";
+    let finalMsg=base+" | Message: "+msg;
+    let url="https://wa.me/91XXXXXXXXXX?text="+encodeURIComponent(finalMsg);
     window.open(url,'_blank');
 }
 
