@@ -2,182 +2,130 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Special Confession</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"><style>
+<title>WhatsApp Style Confession</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet"><style>
 *{margin:0;padding:0;box-sizing:border-box;}
-
 body{
-    font-family:'Poppins',sans-serif;
-    background:linear-gradient(135deg,#141e30,#243b55);
+    font-family:'Roboto',sans-serif;
+    background:#111b21;
     height:100vh;
-    overflow-y:auto;   /* SCROLL ENABLED */
-    color:white;
-}
-
-/* Custom Scrollbar */
-body::-webkit-scrollbar{
-    width:8px;
-}
-body::-webkit-scrollbar-track{
-    background:#1c1c1c;
-}
-body::-webkit-scrollbar-thumb{
-    background:#888;
-    border-radius:10px;
-}
-body::-webkit-scrollbar-thumb:hover{
-    background:#aaa;
-}
-
-.wrapper{
-    min-height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    padding:40px 15px;
 }
 
-.screen{
+.phone{
     width:100%;
-    max-width:600px;
-    background:rgba(255,255,255,0.05);
-    backdrop-filter:blur(20px);
-    border-radius:20px;
-    padding:40px;
+    max-width:420px;
+    height:90vh;
+    background:#0b141a;
+    border-radius:25px;
+    overflow:hidden;
     box-shadow:0 20px 60px rgba(0,0,0,0.6);
-    display:none;
-    animation:fadeIn 1s ease forwards;
+    display:flex;
+    flex-direction:column;
 }
 
-.active{display:block;}
+.header{
+    background:#202c33;
+    padding:15px;
+    color:white;
+    font-weight:500;
+}
+
+.chat-area{
+    flex:1;
+    padding:15px;
+    overflow-y:auto;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    background-image:url('https://i.imgur.com/3fJ1P48.png');
+    background-size:cover;
+}
+
+.message{
+    max-width:75%;
+    padding:10px 14px;
+    border-radius:12px;
+    font-size:14px;
+    line-height:1.4;
+    animation:fadeIn 0.3s ease;
+}
+
+.sent{
+    background:#005c4b;
+    color:white;
+    align-self:flex-end;
+}
 
 @keyframes fadeIn{
-    from{opacity:0; transform:translateY(30px);} 
-    to{opacity:1; transform:translateY(0);} 
+    from{opacity:0;transform:translateY(10px);} 
+    to{opacity:1;transform:translateY(0);} 
 }
 
-h2{
-    font-weight:600;
-    margin-bottom:20px;
-}
-
-#textArea{
-    min-height:260px;
-    line-height:1.9;
-    font-size:16px;
-}
-
-button{
-    margin-top:25px;
-    padding:12px 28px;
-    border:none;
-    border-radius:30px;
-    background:linear-gradient(45deg,#4e73df,#1cc88a);
-    color:white;
-    font-size:15px;
-    cursor:pointer;
-    transition:0.3s ease;
-}
-
-button:hover{
-    transform:translateY(-3px);
-    box-shadow:0 10px 25px rgba(0,0,0,0.4);
+.input-area{
+    padding:10px;
+    background:#202c33;
+    display:flex;
+    gap:8px;
 }
 
 input{
-    width:100%;
-    padding:12px;
-    margin-top:15px;
-    border-radius:12px;
+    flex:1;
+    padding:10px;
+    border-radius:20px;
     border:none;
     outline:none;
 }
 
-.fadeText{
-    animation:softFade 2s ease;
+button{
+    padding:8px 14px;
+    border:none;
+    border-radius:20px;
+    background:#25d366;
+    color:white;
+    cursor:pointer;
 }
 
-@keyframes softFade{
-    from{opacity:0;}
-    to{opacity:1;}
-}
-
-.glow{
-    animation:glowPulse 2.5s infinite;
-}
-
-@keyframes glowPulse{
-    0%{text-shadow:0 0 5px rgba(255,255,255,0.3);} 
-    50%{text-shadow:0 0 20px rgba(255,255,255,0.8);} 
-    100%{text-shadow:0 0 5px rgba(255,255,255,0.3);} 
-}
-
-</style></head><body><!-- Replace with your own downloaded "The Night We Met" mp3 file --><audio id="bgMusic" loop>
-  <source src="the-night-we-met.mp3" type="audio/mpeg">
-</audio><div class="wrapper"><!-- SCREEN 1 --><div class="screen active" id="screen1">
-<h2 class="glow">Ami Subhajit bolchi...</h2>
-<p>Ami jani tui rege achis... but there's something I have to tell you. Seta janar jonno Continue click kor.</p>
-<button onclick="startExperience()">Continue</button>
-</div><!-- SCREEN 2 --><div class="screen" id="screen2">
-<div id="textArea"></div>
-<button id="nextBtn" onclick="showScreen(3)" style="display:none">Next</button>
-</div><!-- SCREEN 3 --><div class="screen" id="screen3">
-<h2>Final Truth</h2>
-<p>
-Keo boluk nai boluk but ami nijer feelings niye sure.<br><br>
-Tor jodi na valo lage then amay follow koris na.<br><br>
-Jodi mone hoy ekta chance deoa uchit, tahole follow kore nis.
-</p>
-<input id="msgBox" placeholder="Write something for me...">
-<button onclick="sendWhatsApp(true)">Follow</button>
-<button onclick="sendWhatsApp(false)" style="background:#c0392b">Unfollow</button>
+</style></head><body><div class="phone">
+<div class="header">Subhajit ❤️</div><div class="chat-area" id="chatBox"></div><div class="input-area">
+<input id="replyInput" placeholder="Type a message">
+<button onclick="sendWhatsApp()">Send</button>
 </div></div><script>
 
 const messages=[
 "Eto din tui jante cheyechilis j ami tor dike keno takai?",
-"(pause)",
 "Asol e ajkal I feel something weird... amar tor proti attachment bereche.",
-"Ami bolte chaini karon amar nijer kache eta faltu mone hoyechilo.",
-"But jedin tor sathe kotha bola bondho korlam, tokhon bujhlam...",
-"Ami onek lonely feel kortesi.",
-"Kemon ekta ojana kosto amake kheye felche.",
-"Tui thakle haste pari. Valo lage. Kosto kom hoy.",
+"Bolte chaini, mone hoyechilo faltu.",
+"Jedin tor sathe kotha bola bondho korlam...",
+"Tokhon bujhlam ami lonely hoye jacchi.",
+"Tui thakle valo lage. Kosto kom hoy.",
 "I feel happy around you."
 ];
 
 let index=0;
-
-function startExperience(){
-    document.getElementById('bgMusic').play();
-    showScreen(2);
-    typeMessage();
-}
+const chat=document.getElementById('chatBox');
 
 function typeMessage(){
     if(index<messages.length){
-        let area=document.getElementById('textArea');
-        let line=document.createElement('div');
-        line.classList.add('fadeText');
-        line.innerHTML=messages[index];
-        area.appendChild(line);
+        let msg=document.createElement('div');
+        msg.classList.add('message','sent');
+        msg.innerText=messages[index];
+        chat.appendChild(msg);
+        chat.scrollTop=chat.scrollHeight;
         index++;
-        setTimeout(typeMessage,2000);
-    }else{
-        document.getElementById('nextBtn').style.display='inline-block';
+        setTimeout(typeMessage,1800);
     }
 }
 
-function showScreen(n){
-    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-    document.getElementById('screen'+n).classList.add('active');
+window.onload=()=>{
+    typeMessage();
 }
 
-/* Replace with your number */
-function sendWhatsApp(follow){
-    let msg=document.getElementById('msgBox').value;
-    let base= follow ? "I choose to follow ❤️" : "I choose to unfollow";
-    let finalMsg=base+" | Message: "+msg;
-    let url="https://wa.me/91XXXXXXXXXX?text="+encodeURIComponent(finalMsg);
+function sendWhatsApp(){
+    let text=document.getElementById('replyInput').value;
+    let url="https://wa.me/916297432203?text="+encodeURIComponent(text);
     window.open(url,'_blank');
 }
 
