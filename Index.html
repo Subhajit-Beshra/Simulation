@@ -2,88 +2,147 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>❤️ A Special Confession</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-<style>
+<title>A Special Confession</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"><style>
 *{margin:0;padding:0;box-sizing:border-box;}
+
 body{
     font-family:'Poppins',sans-serif;
+    background:linear-gradient(135deg,#141e30,#243b55);
     height:100vh;
+    overflow-y:auto;   /* SCROLL ENABLED */
+    color:white;
+}
+
+/* Custom Scrollbar */
+body::-webkit-scrollbar{
+    width:8px;
+}
+body::-webkit-scrollbar-track{
+    background:#1c1c1c;
+}
+body::-webkit-scrollbar-thumb{
+    background:#888;
+    border-radius:10px;
+}
+body::-webkit-scrollbar-thumb:hover{
+    background:#aaa;
+}
+
+.wrapper{
+    min-height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    background:linear-gradient(135deg,#ff758c,#ff7eb3);
-    overflow:hidden;
-}/* Floating Hearts Background */ .heart-bg{ position:fixed; width:100%; height:100%; top:0;left:0; pointer-events:none; } .heart{ position:absolute; color:rgba(255,255,255,0.7); animation:fall linear infinite; } @keyframes fall{ 0%{transform:translateY(-10vh) scale(1);} 100%{transform:translateY(110vh) scale(1.5);} }
+    padding:40px 15px;
+}
 
-.screen{ width:90%; max-width:520px; background:rgba(255,255,255,0.95); backdrop-filter:blur(20px); border-radius:25px; padding:35px; text-align:center; box-shadow:0 25px 60px rgba(0,0,0,0.25); display:none; animation:fadeIn 1s ease; } .active{display:block;}
+.screen{
+    width:100%;
+    max-width:600px;
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(20px);
+    border-radius:20px;
+    padding:40px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.6);
+    display:none;
+    animation:fadeIn 1s ease forwards;
+}
 
-@keyframes fadeIn{ from{opacity:0; transform:scale(0.9);} to{opacity:1; transform:scale(1);} }
+.active{display:block;}
 
-h2{color:#ff4d6d;margin-bottom:15px;} #textArea{ min-height:220px; font-size:16px; line-height:1.8; text-align:left; }
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(30px);} 
+    to{opacity:1; transform:translateY(0);} 
+}
 
-.cursor{ display:inline-block; width:2px; background:#ff4d6d; animation:blink 0.8s infinite; } @keyframes blink{ 0%,50%,100%{opacity:1;} 25%,75%{opacity:0;} }
+h2{
+    font-weight:600;
+    margin-bottom:20px;
+}
 
-button{ margin-top:20px; padding:12px 28px; border:none; border-radius:30px; background:linear-gradient(45deg,#ff4d6d,#ff758f); color:white; font-size:15px; cursor:pointer; transition:0.3s; } button:hover{transform:scale(1.08);}
+#textArea{
+    min-height:260px;
+    line-height:1.9;
+    font-size:16px;
+}
 
-input{ width:100%; padding:12px; border-radius:15px; border:1px solid #ddd; margin-top:15px; } .small{font-size:13px;color:#777;margin-top:8px;}
+button{
+    margin-top:25px;
+    padding:12px 28px;
+    border:none;
+    border-radius:30px;
+    background:linear-gradient(45deg,#4e73df,#1cc88a);
+    color:white;
+    font-size:15px;
+    cursor:pointer;
+    transition:0.3s ease;
+}
 
-</style>
-</head>
-<body><!-- Background Music (replace link with your own mp3 if needed) --><audio id="bgMusic" loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-</audio><div class="heart-bg" id="heartBg"></div><!-- SCREEN 1 --><div class="screen active" id="screen1">
-<h2>❤️ Ami Subhajit bolchi...</h2>
-<p>Ami jani tui rege achis... but there's something I have to tell you. Seta janar jonno click Continue.</p>
+button:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(0,0,0,0.4);
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin-top:15px;
+    border-radius:12px;
+    border:none;
+    outline:none;
+}
+
+.fadeText{
+    animation:softFade 2s ease;
+}
+
+@keyframes softFade{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+
+.glow{
+    animation:glowPulse 2.5s infinite;
+}
+
+@keyframes glowPulse{
+    0%{text-shadow:0 0 5px rgba(255,255,255,0.3);} 
+    50%{text-shadow:0 0 20px rgba(255,255,255,0.8);} 
+    100%{text-shadow:0 0 5px rgba(255,255,255,0.3);} 
+}
+
+</style></head><body><!-- Replace with your own downloaded "The Night We Met" mp3 file --><audio id="bgMusic" loop>
+  <source src="the-night-we-met.mp3" type="audio/mpeg">
+</audio><div class="wrapper"><!-- SCREEN 1 --><div class="screen active" id="screen1">
+<h2 class="glow">Ami Subhajit bolchi...</h2>
+<p>Ami jani tui rege achis... but there's something I have to tell you. Seta janar jonno Continue click kor.</p>
 <button onclick="startExperience()">Continue</button>
 </div><!-- SCREEN 2 --><div class="screen" id="screen2">
 <div id="textArea"></div>
-<div class="cursor"></div>
-<button id="nextBtn" onclick="showScreen(3)" style="display:none">Next ➡</button>
+<button id="nextBtn" onclick="showScreen(3)" style="display:none">Next</button>
 </div><!-- SCREEN 3 --><div class="screen" id="screen3">
-<h2>❤️ Final Truth</h2>
+<h2>Final Truth</h2>
 <p>
 Keo boluk nai boluk but ami nijer feelings niye sure.<br><br>
 Tor jodi na valo lage then amay follow koris na.<br><br>
-And jodi mone hoy amay ekta sujog deoa uchit, then follow kore nis.
+Jodi mone hoy ekta chance deoa uchit, tahole follow kore nis.
 </p>
-<input id="msgBox" placeholder="Write something for me..."></input>
-<div class="small">(Your reply will open WhatsApp)</div>
-<button onclick="sendWhatsApp(true)">Follow ❤️</button>
-<button onclick="sendWhatsApp(false)" style="background:#555">Unfollow 💔</button>
-</div><script>
-
-/* Floating Hearts Generator */
-function createHearts(){
-    const heartBg=document.getElementById('heartBg');
-    for(let i=0;i<25;i++){
-        let heart=document.createElement('div');
-        heart.classList.add('heart');
-        heart.innerHTML='❤️';
-        heart.style.left=Math.random()*100+'%';
-        heart.style.fontSize=(15+Math.random()*25)+'px';
-        heart.style.animationDuration=(5+Math.random()*5)+'s';
-        heartBg.appendChild(heart);
-    }
-}
-createHearts();
+<input id="msgBox" placeholder="Write something for me...">
+<button onclick="sendWhatsApp(true)">Follow</button>
+<button onclick="sendWhatsApp(false)" style="background:#c0392b">Unfollow</button>
+</div></div><script>
 
 const messages=[
 "Eto din tui jante cheyechilis j ami tor dike keno takai?",
-"Asol e ami janina keno ajkal I feel something weird... amar tor proti attachment bereche.",
-"Ami tai bolte chaini karon amar o eta faltu mone hoyechilo.",
-"But ami sure oidin holam jedin theke ami tor sathe kotha bola bondho kore diy.",
-"I feel so lonely and like something's losing from me.",
-"Kemon ekta ojana kosto amak kheye felche.",
-"Ami janina eta ki... keno hochhe kichu bujhte parchhi na.",
-"But etotuku jani je tui thakle haste pari, valo lage, oto kosto hoyna.",
-"Ami tai friend ke bollam, se bollo toke block marte.",
-"Janina keno oi somoy hat kapchilo.",
-"Tai se nije theke block ta marlo.",
-"Ami pore abar unblock korlam... but totokkhone tor request accept hoyni.",
-"Amar routine puro bigre geche.",
-"Tor sathe kotha na bole thaka jachhe na.",
-"I don't know why... but I feel happy around you."
+"(pause)",
+"Asol e ajkal I feel something weird... amar tor proti attachment bereche.",
+"Ami bolte chaini karon amar nijer kache eta faltu mone hoyechilo.",
+"But jedin tor sathe kotha bola bondho korlam, tokhon bujhlam...",
+"Ami onek lonely feel kortesi.",
+"Kemon ekta ojana kosto amake kheye felche.",
+"Tui thakle haste pari. Valo lage. Kosto kom hoy.",
+"I feel happy around you."
 ];
 
 let index=0;
@@ -96,7 +155,11 @@ function startExperience(){
 
 function typeMessage(){
     if(index<messages.length){
-        document.getElementById('textArea').innerHTML += messages[index]+"<br><br>";
+        let area=document.getElementById('textArea');
+        let line=document.createElement('div');
+        line.classList.add('fadeText');
+        line.innerHTML=messages[index];
+        area.appendChild(line);
         index++;
         setTimeout(typeMessage,2000);
     }else{
@@ -109,11 +172,11 @@ function showScreen(n){
     document.getElementById('screen'+n).classList.add('active');
 }
 
-/* Replace 91XXXXXXXXXX with your WhatsApp number */
+/* Replace with your number */
 function sendWhatsApp(follow){
     let msg=document.getElementById('msgBox').value;
-    let base= follow ? "I want to follow you ❤️" : "I will unfollow 💔";
-    let finalMsg=base+" | Her message: "+msg;
+    let base= follow ? "I choose to follow ❤️" : "I choose to unfollow";
+    let finalMsg=base+" | Message: "+msg;
     let url="https://wa.me/91XXXXXXXXXX?text="+encodeURIComponent(finalMsg);
     window.open(url,'_blank');
 }
