@@ -1,147 +1,165 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Oisweyee ✨</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+<!DOCTYPE html><html lang="en">  <head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>Private Confession</title>  
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet"><style>  
+*{margin:0;padding:0;box-sizing:border-box;}  body{
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+min-height:100vh;
+overflow-y:auto;
 }
 
-body{
-    font-family:'Poppins',sans-serif;
-    background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
-    background-size:400% 400%;
-    animation:bgMove 18s ease infinite;
-    color:white;
-    min-height:100vh;
-    overflow-y:auto;
+.wrapper{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:40px 15px;
 }
 
-@keyframes bgMove{
-    0%{background-position:0% 50%;}
-    50%{background-position:100% 50%;}
-    100%{background-position:0% 50%;}
+.screen{
+width:100%;
+max-width:650px;
+background:rgba(255,255,255,0.06);
+backdrop-filter:blur(20px);
+border-radius:20px;
+padding:40px;
+box-shadow:0 25px 70px rgba(0,0,0,0.6);
+display:none;
+animation:fadeIn 0.8s ease forwards;
 }
 
-.container{
-    max-width:800px;
-    margin:100px auto;
-    padding:20px;
+.active{display:block;}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(30px);}
+to{opacity:1;transform:translateY(0);}
 }
 
-.card{
-    background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(20px);
-    padding:50px;
-    border-radius:25px;
-    box-shadow:0 25px 80px rgba(0,0,0,0.6);
-    text-align:center;
+h2{
+font-weight:400;
+margin-bottom:20px;
 }
 
-h1{
-    font-size:32px;
-    margin-bottom:20px;
-    background:linear-gradient(45deg,#ff9a9e,#fad0c4);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
+#textArea{
+min-height:260px;
+font-size:16px;
+line-height:1.8;
+white-space:pre-line;
 }
 
-#message{
-    font-size:17px;
-    line-height:1.9;
-    white-space:pre-line;
-    min-height:250px;
+.cursor{
+display:inline-block;
+width:2px;
+background:white;
+margin-left:3px;
+animation:blink 1s infinite;
+}
+
+@keyframes blink{
+0%,50%,100%{opacity:1;}
+25%,75%{opacity:0;}
 }
 
 button{
-    margin-top:30px;
-    padding:15px 40px;
-    border:none;
-    border-radius:40px;
-    background:linear-gradient(45deg,#ff6b81,#ff4757);
-    color:white;
-    font-size:16px;
-    cursor:pointer;
-    transition:0.3s;
+margin-top:25px;
+padding:12px 28px;
+border:none;
+border-radius:30px;
+background:linear-gradient(45deg,#4e73df,#1cc88a);
+color:white;
+font-size:15px;
+cursor:pointer;
+transition:0.3s ease;
 }
 
 button:hover{
-    transform:translateY(-4px);
-    box-shadow:0 15px 30px rgba(255,71,87,0.4);
+transform:translateY(-3px);
+box-shadow:0 10px 25px rgba(0,0,0,0.4);
 }
-</style>
-</head>
 
-<body>
+input{
+width:100%;
+padding:12px;
+margin-top:15px;
+border-radius:12px;
+border:none;
+outline:none;
+}
 
-<audio id="bgMusic" loop>
-    <source src="night.mp3" type="audio/mpeg">
-</audio>
+</style></head><body><!-- IMPORTANT: Download "The Night We Met" mp3 and rename it to night.mp3 --><audio id="bgMusic" loop>
+<source src="night.mp3" type="audio/mpeg">
+</audio><div class="wrapper"><!-- SCREEN 1 --><div class="screen active" id="screen1">
 
-<div class="container">
-    <div class="card">
-        <h1>Happy Birthday Oisweyee 🎂✨</h1>
-        <div id="message"></div>
-        <button onclick="startExperience()">Start the Moment 💖</button>
-    </div>
-</div>
+<h2>Ami Subhajit bolchi...</h2>  
+<p>Ami jani tui rege achis. But there is something I need to tell you. Continue click korle shob bolbo.</p>  
+<button onclick="startExperience()">Continue</button>  
+</div><!-- SCREEN 2 --><div class="screen" id="screen2">  
+<div id="textArea"></div><span class="cursor" id="cursor"></span>  
+<button id="nextBtn" onclick="showScreen(3)" style="display:none">Next</button>  
+</div><!-- SCREEN 3 --><div class="screen" id="screen3">  
+<h2>Final Truth</h2>  
+<p>  
+Keo boluk nai boluk but ami nijer feelings niye sure.Tor jodi na valo lage then amay follow koris na.  Jodi mone hoy ekta chance deoa uchit, tahole follow kore nis.
 
-<script>
+</p>  
+<input id="msgBox" placeholder="Write something for me...">  
+<button onclick="sendWhatsApp(true)">Follow</button>  
+<button onclick="sendWhatsApp(false)" style="background:#c0392b">Unfollow</button>  
+</div></div><script>  const messages = [
+"Eto din tui jante cheyechilis j ami tor dike keno takai?\n\n",
+"Asol e ajkal I feel something weird... amar tor proti attachment bereche.\n\n",
+"Ami bolte chaini karon amar nijer kache eta faltu mone hoyechilo.\n\n",
+"But jedin tor sathe kotha bola bondho korlam... tokhon bujhlam.\n\n",
+"Ami onek lonely feel kortesi.\n\n",
+"Kemon ekta ojana kosto amake kheye felche.\n\n",
+"Tui thakle haste pari. Valo lage. Oto kosto hoy na.\n\n",
+"I don't know why... but I feel happy around you."
+];
 
-const text = `
-Today isn't just your birthday...
-
-It's the day someone truly rare came into this world.
-
-There are many beautiful faces,
-but very few beautiful souls.
-
-You are calm.
-You are warmth.
-You are a quiet kind of magic.
-
-The world feels softer
-when you smile.
-
-I hope life gives you
-everything you secretly wish for.
-
-Stay rare.
-Stay glowing.
-And never forget how special you are. ✨
-`;
-
-let i = 0;
+let msgIndex = 0;
+let charIndex = 0;
+let currentText = '';
 
 function startExperience(){
-
-    // Play music
-    const music = document.getElementById("bgMusic");
-    music.play().catch(()=>{});
-
-    // Hide button
-    document.querySelector("button").style.display="none";
-
-    // Start typing
-    typeWriter();
+document.getElementById('bgMusic').play();
+showScreen(2);
+typeWriter();
 }
 
 function typeWriter(){
-    if(i < text.length){
-        document.getElementById("message").innerHTML += text.charAt(i);
-        i++;
-        setTimeout(typeWriter, 35);
-    }
+if(msgIndex < messages.length){
+if(charIndex < messages[msgIndex].length){
+currentText += messages[msgIndex].charAt(charIndex);
+document.getElementById('textArea').innerText = currentText;
+charIndex++;
+setTimeout(typeWriter, 40);
+} else {
+msgIndex++;
+charIndex = 0;
+setTimeout(typeWriter, 1000);
+}
+} else {
+document.getElementById('cursor').style.display='none';
+document.getElementById('nextBtn').style.display='inline-block';
+}
 }
 
-</script>
+function showScreen(n){
+document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+document.getElementById('screen'+n).classList.add('active');
+}
 
-</body>
+function sendWhatsApp(follow){
+let msg=document.getElementById('msgBox').value;
+let base= follow ? "I choose to follow" : "I choose to unfollow";
+let finalMsg=base+" | Message: "+msg;
+let url="https://wa.me/916297432203?text="+encodeURIComponent(finalMsg);
+window.open(url,'_blank');
+}
+
+</script></body>
+
 </html>
