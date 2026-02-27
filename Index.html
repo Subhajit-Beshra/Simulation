@@ -4,10 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Birthday Oisweyee 💖</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
 body{
     font-family:'Poppins',sans-serif;
@@ -16,27 +21,28 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    background:linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#1a2a6c);
+    background:linear-gradient(-45deg,#141e30,#243b55,#1a2a6c,#16222a);
     background-size:400% 400%;
-    animation:gradientMove 12s ease infinite;
+    animation:gradient 15s ease infinite;
+    color:white;
 }
 
 /* Animated gradient */
-@keyframes gradientMove{
+@keyframes gradient{
     0%{background-position:0% 50%;}
     50%{background-position:100% 50%;}
     100%{background-position:0% 50%;}
 }
 
 .card{
+    width:90%;
     max-width:650px;
     padding:50px;
     border-radius:25px;
     background:rgba(255,255,255,0.08);
     backdrop-filter:blur(25px);
-    box-shadow:0 30px 80px rgba(0,0,0,0.6);
+    box-shadow:0 30px 80px rgba(0,0,0,0.7);
     text-align:center;
-    color:white;
     animation:fadeIn 1.2s ease forwards;
 }
 
@@ -59,7 +65,7 @@ h1{
     font-size:16px;
     line-height:1.8;
     white-space:pre-line;
-    opacity:0.9;
+    opacity:0.95;
 }
 
 button{
@@ -79,15 +85,15 @@ button:hover{
     box-shadow:0 15px 35px rgba(255,71,87,0.4);
 }
 
-/* Floating light particles */
+/* Floating particles */
 .particle{
     position:absolute;
-    width:6px;
-    height:6px;
+    width:5px;
+    height:5px;
     background:white;
     border-radius:50%;
     opacity:0.6;
-    animation:float 8s linear infinite;
+    animation:float linear infinite;
 }
 
 @keyframes float{
@@ -104,51 +110,77 @@ button:hover{
 </audio>
 
 <div class="card">
-<h1>Happy Birthday Oisweyee 🎂✨</h1>
-<div id="message"></div>
-<button onclick="startMusic()">Start the Moment 💖</button>
+    <h1>Happy Birthday Oisweyee 🎂✨</h1>
+    <div id="message"></div>
+    <button id="startBtn">Start the Moment 💖</button>
 </div>
 
 <script>
 
-const text =
-"Today isn't just your birthday...\n\n" +
-"It's the anniversary of the day the world became softer.\n\n" +
-"There are many beautiful people,\n" +
-but very few who feel like peace.\n\n" +
-"You are one of them.\n\n" +
-"I don't know what the future holds,\n" +
-but I hope it always holds your smile.\n\n" +
-"Stay rare. Stay magical.\n" +
-"And never stop glowing the way you do. ✨";
+/* Birthday Message */
+const text = `
+Today isn't just your birthday...
 
-let i=0;
+It's the day someone truly special was born.
+
+There are many beautiful people in this world,
+but very few who feel like peace.
+
+You are one of them.
+
+Your smile has a calmness,
+your presence has a warmth,
+and your existence makes the world softer.
+
+On your birthday,
+I just hope life gives you
+everything you quietly deserve.
+
+Stay rare.
+Stay magical.
+And never stop glowing the way you do. ✨
+`;
+
+let index = 0;
+let typing = false;
+
+const messageDiv = document.getElementById("message");
+const startBtn = document.getElementById("startBtn");
+const music = document.getElementById("bgMusic");
+
+/* Typewriter Effect */
 function typeWriter(){
-    if(i < text.length){
-        document.getElementById("message").innerHTML += text.charAt(i);
-        i++;
-        setTimeout(typeWriter,35);
+    if(index < text.length){
+        messageDiv.innerHTML += text.charAt(index);
+        index++;
+        setTimeout(typeWriter, 35);
     }
 }
 
-function startMusic(){
-    document.getElementById("bgMusic").play();
-    document.querySelector("button").style.display="none";
-    typeWriter();
-}
+/* Start Experience */
+startBtn.addEventListener("click", function(){
+    if(!typing){
+        typing = true;
+        music.play();
+        startBtn.style.display = "none";
+        typeWriter();
+    }
+});
 
 /* Floating particles */
 function createParticle(){
-    const p=document.createElement("div");
+    const p = document.createElement("div");
     p.classList.add("particle");
-    p.style.left=Math.random()*100+"vw";
-    p.style.animationDuration=(5+Math.random()*5)+"s";
+    p.style.left = Math.random() * 100 + "vw";
+    p.style.animationDuration = (6 + Math.random() * 5) + "s";
     document.body.appendChild(p);
 
-    setTimeout(()=>{p.remove();},8000);
+    setTimeout(() => {
+        p.remove();
+    }, 10000);
 }
 
-setInterval(createParticle,300);
+setInterval(createParticle, 400);
 
 </script>
 
