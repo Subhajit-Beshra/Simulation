@@ -20,74 +20,37 @@ body{
     background-size:400% 400%;
     animation:bgMove 18s ease infinite;
     color:white;
-    overflow-y:auto;
     min-height:100vh;
+    overflow-y:auto;
 }
 
-/* Smooth animated gradient */
 @keyframes bgMove{
     0%{background-position:0% 50%;}
     50%{background-position:100% 50%;}
     100%{background-position:0% 50%;}
 }
 
-/* Scrollbar Styling */
-::-webkit-scrollbar{
-    width:8px;
-}
-::-webkit-scrollbar-thumb{
-    background:linear-gradient(#ff6b81,#ff9a9e);
-    border-radius:10px;
-}
-
-/* Layout */
 .container{
-    max-width:900px;
-    margin:80px auto;
-    padding:0 20px;
+    max-width:800px;
+    margin:100px auto;
+    padding:20px;
 }
 
-.hero{
-    text-align:center;
-    margin-bottom:60px;
-}
-
-.hero h1{
-    font-size:36px;
-    font-weight:600;
-    background:linear-gradient(45deg,#ff9a9e,#fad0c4);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-}
-
-.hero p{
-    margin-top:15px;
-    opacity:0.8;
-}
-
-/* Glass Card */
 .card{
     background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(25px);
+    backdrop-filter:blur(20px);
     padding:50px;
     border-radius:25px;
     box-shadow:0 25px 80px rgba(0,0,0,0.6);
-    position:relative;
-    overflow:hidden;
+    text-align:center;
 }
 
-.card::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    border-radius:25px;
-    padding:1px;
-    background:linear-gradient(45deg,#ff9a9e,#ff6b81,#fbc2eb);
-    -webkit-mask:
-        linear-gradient(#000 0 0) content-box,
-        linear-gradient(#000 0 0);
-    -webkit-mask-composite:xor;
-            mask-composite:exclude;
+h1{
+    font-size:32px;
+    margin-bottom:20px;
+    background:linear-gradient(45deg,#ff9a9e,#fad0c4);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
 }
 
 #message{
@@ -98,38 +61,21 @@ body{
 }
 
 button{
-    margin-top:40px;
+    margin-top:30px;
     padding:15px 40px;
     border:none;
     border-radius:40px;
     background:linear-gradient(45deg,#ff6b81,#ff4757);
     color:white;
-    font-size:15px;
+    font-size:16px;
     cursor:pointer;
     transition:0.3s;
 }
 
 button:hover{
-    transform:translateY(-5px);
-    box-shadow:0 20px 40px rgba(255,71,87,0.4);
+    transform:translateY(-4px);
+    box-shadow:0 15px 30px rgba(255,71,87,0.4);
 }
-
-/* Floating glow particles */
-.particle{
-    position:fixed;
-    width:4px;
-    height:4px;
-    background:white;
-    border-radius:50%;
-    opacity:0.5;
-    animation:float linear infinite;
-}
-
-@keyframes float{
-    from{transform:translateY(100vh);}
-    to{transform:translateY(-10vh);}
-}
-
 </style>
 </head>
 
@@ -140,17 +86,11 @@ button:hover{
 </audio>
 
 <div class="container">
-
-    <div class="hero">
-        <h1>Happy Birthday Oisweyee 🎂✨</h1>
-        <p>A little something made specially for you.</p>
-    </div>
-
     <div class="card">
+        <h1>Happy Birthday Oisweyee 🎂✨</h1>
         <div id="message"></div>
-        <button id="startBtn">Start the Moment 💖</button>
+        <button onclick="startExperience()">Start the Moment 💖</button>
     </div>
-
 </div>
 
 <script>
@@ -170,8 +110,8 @@ You are a quiet kind of magic.
 The world feels softer
 when you smile.
 
-I don’t know what the future holds,
-but I hope it always holds your happiness.
+I hope life gives you
+everything you secretly wish for.
 
 Stay rare.
 Stay glowing.
@@ -179,40 +119,27 @@ And never forget how special you are. ✨
 `;
 
 let i = 0;
-let started = false;
 
-const messageDiv = document.getElementById("message");
-const startBtn = document.getElementById("startBtn");
-const music = document.getElementById("bgMusic");
+function startExperience(){
+
+    // Play music
+    const music = document.getElementById("bgMusic");
+    music.play().catch(()=>{});
+
+    // Hide button
+    document.querySelector("button").style.display="none";
+
+    // Start typing
+    typeWriter();
+}
 
 function typeWriter(){
     if(i < text.length){
-        messageDiv.innerHTML += text.charAt(i);
+        document.getElementById("message").innerHTML += text.charAt(i);
         i++;
         setTimeout(typeWriter, 35);
     }
 }
-
-startBtn.addEventListener("click", function(){
-    if(!started){
-        started = true;
-        music.play();
-        startBtn.style.display="none";
-        typeWriter();
-    }
-});
-
-/* Floating particles */
-function createParticle(){
-    const p = document.createElement("div");
-    p.classList.add("particle");
-    p.style.left = Math.random()*100 + "vw";
-    p.style.animationDuration = (6 + Math.random()*5) + "s";
-    document.body.appendChild(p);
-    setTimeout(()=>{p.remove();},10000);
-}
-
-setInterval(createParticle,400);
 
 </script>
 
