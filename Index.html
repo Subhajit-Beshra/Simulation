@@ -4,131 +4,151 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Birthday Oisweyee 💖</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 
 body{
     font-family:'Poppins',sans-serif;
-    background:linear-gradient(135deg,#ff9a9e,#fad0c4);
-    min-height:100vh;
+    height:100vh;
+    overflow:hidden;
     display:flex;
     justify-content:center;
     align-items:center;
-    padding:20px;
-    overflow:hidden;
+    background:linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#1a2a6c);
+    background-size:400% 400%;
+    animation:gradientMove 12s ease infinite;
+}
+
+/* Animated gradient */
+@keyframes gradientMove{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
 }
 
 .card{
-    max-width:600px;
-    background:white;
-    border-radius:20px;
-    padding:40px;
+    max-width:650px;
+    padding:50px;
+    border-radius:25px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(25px);
+    box-shadow:0 30px 80px rgba(0,0,0,0.6);
     text-align:center;
-    box-shadow:0 25px 60px rgba(0,0,0,0.2);
-    animation:fadeIn 1s ease forwards;
+    color:white;
+    animation:fadeIn 1.2s ease forwards;
+}
+
+@keyframes fadeIn{
+    from{opacity:0;transform:translateY(30px);}
+    to{opacity:1;transform:translateY(0);}
 }
 
 h1{
-    font-weight:500;
-    color:#e84393;
-    margin-bottom:20px;
+    font-weight:600;
+    margin-bottom:25px;
+    font-size:28px;
+    background:linear-gradient(45deg,#ff9a9e,#fad0c4);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
 }
 
 #message{
-    min-height:200px;
+    min-height:220px;
     font-size:16px;
     line-height:1.8;
-    color:#555;
     white-space:pre-line;
+    opacity:0.9;
 }
 
 button{
-    margin-top:25px;
-    padding:12px 25px;
+    margin-top:30px;
+    padding:14px 35px;
     border:none;
     border-radius:30px;
     background:linear-gradient(45deg,#ff6b81,#ff4757);
     color:white;
-    cursor:pointer;
     font-size:15px;
+    cursor:pointer;
     transition:0.3s;
 }
 
 button:hover{
-    transform:translateY(-3px);
+    transform:translateY(-4px);
+    box-shadow:0 15px 35px rgba(255,71,87,0.4);
 }
 
-@keyframes fadeIn{
-    from{opacity:0;transform:translateY(20px);}
-    to{opacity:1;transform:translateY(0);}
-}
-
-/* Floating hearts */
-.heart{
+/* Floating light particles */
+.particle{
     position:absolute;
-    font-size:20px;
-    animation:float 6s linear infinite;
+    width:6px;
+    height:6px;
+    background:white;
+    border-radius:50%;
+    opacity:0.6;
+    animation:float 8s linear infinite;
 }
 
 @keyframes float{
-    0%{transform:translateY(100vh);opacity:0;}
-    50%{opacity:1;}
-    100%{transform:translateY(-10vh);opacity:0;}
+    from{transform:translateY(100vh);}
+    to{transform:translateY(-10vh);}
 }
 </style>
 </head>
+
 <body>
 
+<audio id="bgMusic" loop>
+    <source src="night.mp3" type="audio/mpeg">
+</audio>
+
 <div class="card">
-<h1>Happy Birthday Oisweyee 🎂💖</h1>
+<h1>Happy Birthday Oisweyee 🎂✨</h1>
 <div id="message"></div>
-<button onclick="showFinal()">Tap For A Surprise</button>
+<button onclick="startMusic()">Start the Moment 💖</button>
 </div>
 
 <script>
 
-const text = 
-"Today the world celebrates someone really special...\n\n" +
-"The girl whose smile can calm storms.\n" +
-"The girl whose presence makes everything feel lighter.\n\n" +
-"I don't know if I say this enough...\n" +
-"But you matter. More than you think.\n\n" +
-"On your birthday, I just want one thing...\n" +
-"May you always stay this pure, this bright, this beautiful.\n\n" +
-"And selfishly... I hope I get to see that smile more often. 💖";
+const text =
+"Today isn't just your birthday...\n\n" +
+"It's the anniversary of the day the world became softer.\n\n" +
+"There are many beautiful people,\n" +
+but very few who feel like peace.\n\n" +
+"You are one of them.\n\n" +
+"I don't know what the future holds,\n" +
+but I hope it always holds your smile.\n\n" +
+"Stay rare. Stay magical.\n" +
+"And never stop glowing the way you do. ✨";
 
-let i = 0;
+let i=0;
 function typeWriter(){
     if(i < text.length){
         document.getElementById("message").innerHTML += text.charAt(i);
         i++;
-        setTimeout(typeWriter, 40);
+        setTimeout(typeWriter,35);
     }
 }
 
-typeWriter();
-
-function showFinal(){
-    alert("You deserve all the happiness in this world. Never forget that. 💞");
+function startMusic(){
+    document.getElementById("bgMusic").play();
+    document.querySelector("button").style.display="none";
+    typeWriter();
 }
 
-/* Floating hearts */
-function createHeart(){
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.innerHTML = "💖";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = Math.random() * 20 + 15 + "px";
-    document.body.appendChild(heart);
+/* Floating particles */
+function createParticle(){
+    const p=document.createElement("div");
+    p.classList.add("particle");
+    p.style.left=Math.random()*100+"vw";
+    p.style.animationDuration=(5+Math.random()*5)+"s";
+    document.body.appendChild(p);
 
-    setTimeout(()=>{
-        heart.remove();
-    },6000);
+    setTimeout(()=>{p.remove();},8000);
 }
 
-setInterval(createHeart,500);
+setInterval(createParticle,300);
 
 </script>
 
