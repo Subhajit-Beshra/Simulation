@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Oisweyee 💖</title>
+<title>Happy Birthday Oisweyee ✨</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -16,63 +16,92 @@
 
 body{
     font-family:'Poppins',sans-serif;
-    height:100vh;
-    overflow:hidden;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:linear-gradient(-45deg,#141e30,#243b55,#1a2a6c,#16222a);
+    background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
     background-size:400% 400%;
-    animation:gradient 15s ease infinite;
+    animation:bgMove 18s ease infinite;
     color:white;
+    overflow-y:auto;
+    min-height:100vh;
 }
 
-/* Animated gradient */
-@keyframes gradient{
+/* Smooth animated gradient */
+@keyframes bgMove{
     0%{background-position:0% 50%;}
     50%{background-position:100% 50%;}
     100%{background-position:0% 50%;}
 }
 
-.card{
-    width:90%;
-    max-width:650px;
-    padding:50px;
-    border-radius:25px;
-    background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(25px);
-    box-shadow:0 30px 80px rgba(0,0,0,0.7);
+/* Scrollbar Styling */
+::-webkit-scrollbar{
+    width:8px;
+}
+::-webkit-scrollbar-thumb{
+    background:linear-gradient(#ff6b81,#ff9a9e);
+    border-radius:10px;
+}
+
+/* Layout */
+.container{
+    max-width:900px;
+    margin:80px auto;
+    padding:0 20px;
+}
+
+.hero{
     text-align:center;
-    animation:fadeIn 1.2s ease forwards;
+    margin-bottom:60px;
 }
 
-@keyframes fadeIn{
-    from{opacity:0;transform:translateY(30px);}
-    to{opacity:1;transform:translateY(0);}
-}
-
-h1{
+.hero h1{
+    font-size:36px;
     font-weight:600;
-    margin-bottom:25px;
-    font-size:28px;
     background:linear-gradient(45deg,#ff9a9e,#fad0c4);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
 }
 
+.hero p{
+    margin-top:15px;
+    opacity:0.8;
+}
+
+/* Glass Card */
+.card{
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(25px);
+    padding:50px;
+    border-radius:25px;
+    box-shadow:0 25px 80px rgba(0,0,0,0.6);
+    position:relative;
+    overflow:hidden;
+}
+
+.card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:25px;
+    padding:1px;
+    background:linear-gradient(45deg,#ff9a9e,#ff6b81,#fbc2eb);
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;
+            mask-composite:exclude;
+}
+
 #message{
-    min-height:220px;
-    font-size:16px;
-    line-height:1.8;
+    font-size:17px;
+    line-height:1.9;
     white-space:pre-line;
-    opacity:0.95;
+    min-height:250px;
 }
 
 button{
-    margin-top:30px;
-    padding:14px 35px;
+    margin-top:40px;
+    padding:15px 40px;
     border:none;
-    border-radius:30px;
+    border-radius:40px;
     background:linear-gradient(45deg,#ff6b81,#ff4757);
     color:white;
     font-size:15px;
@@ -81,18 +110,18 @@ button{
 }
 
 button:hover{
-    transform:translateY(-4px);
-    box-shadow:0 15px 35px rgba(255,71,87,0.4);
+    transform:translateY(-5px);
+    box-shadow:0 20px 40px rgba(255,71,87,0.4);
 }
 
-/* Floating particles */
+/* Floating glow particles */
 .particle{
-    position:absolute;
-    width:5px;
-    height:5px;
+    position:fixed;
+    width:4px;
+    height:4px;
     background:white;
     border-radius:50%;
-    opacity:0.6;
+    opacity:0.5;
     animation:float linear infinite;
 }
 
@@ -100,6 +129,7 @@ button:hover{
     from{transform:translateY(100vh);}
     to{transform:translateY(-10vh);}
 }
+
 </style>
 </head>
 
@@ -109,60 +139,65 @@ button:hover{
     <source src="night.mp3" type="audio/mpeg">
 </audio>
 
-<div class="card">
-    <h1>Happy Birthday Oisweyee 🎂✨</h1>
-    <div id="message"></div>
-    <button id="startBtn">Start the Moment 💖</button>
+<div class="container">
+
+    <div class="hero">
+        <h1>Happy Birthday Oisweyee 🎂✨</h1>
+        <p>A little something made specially for you.</p>
+    </div>
+
+    <div class="card">
+        <div id="message"></div>
+        <button id="startBtn">Start the Moment 💖</button>
+    </div>
+
 </div>
 
 <script>
 
-/* Birthday Message */
 const text = `
 Today isn't just your birthday...
 
-It's the day someone truly special was born.
+It's the day someone truly rare came into this world.
 
-There are many beautiful people in this world,
-but very few who feel like peace.
+There are many beautiful faces,
+but very few beautiful souls.
 
-You are one of them.
+You are calm.
+You are warmth.
+You are a quiet kind of magic.
 
-Your smile has a calmness,
-your presence has a warmth,
-and your existence makes the world softer.
+The world feels softer
+when you smile.
 
-On your birthday,
-I just hope life gives you
-everything you quietly deserve.
+I don’t know what the future holds,
+but I hope it always holds your happiness.
 
 Stay rare.
-Stay magical.
-And never stop glowing the way you do. ✨
+Stay glowing.
+And never forget how special you are. ✨
 `;
 
-let index = 0;
-let typing = false;
+let i = 0;
+let started = false;
 
 const messageDiv = document.getElementById("message");
 const startBtn = document.getElementById("startBtn");
 const music = document.getElementById("bgMusic");
 
-/* Typewriter Effect */
 function typeWriter(){
-    if(index < text.length){
-        messageDiv.innerHTML += text.charAt(index);
-        index++;
+    if(i < text.length){
+        messageDiv.innerHTML += text.charAt(i);
+        i++;
         setTimeout(typeWriter, 35);
     }
 }
 
-/* Start Experience */
 startBtn.addEventListener("click", function(){
-    if(!typing){
-        typing = true;
+    if(!started){
+        started = true;
         music.play();
-        startBtn.style.display = "none";
+        startBtn.style.display="none";
         typeWriter();
     }
 });
@@ -171,16 +206,13 @@ startBtn.addEventListener("click", function(){
 function createParticle(){
     const p = document.createElement("div");
     p.classList.add("particle");
-    p.style.left = Math.random() * 100 + "vw";
-    p.style.animationDuration = (6 + Math.random() * 5) + "s";
+    p.style.left = Math.random()*100 + "vw";
+    p.style.animationDuration = (6 + Math.random()*5) + "s";
     document.body.appendChild(p);
-
-    setTimeout(() => {
-        p.remove();
-    }, 10000);
+    setTimeout(()=>{p.remove();},10000);
 }
 
-setInterval(createParticle, 400);
+setInterval(createParticle,400);
 
 </script>
 
